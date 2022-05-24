@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "id": "628ca469f9ac749373f103d4",
+      "picture": "https://picsum.photos/200/300?random=2",
+      "name": "Rosanna Holmes",
+      "email": "rosannaholmes@jasper.com",
+      "phone": "+1 (869) 489-2584"
+    },
+    {
+      "id": "628ca46952c5f0a305c1bc41",
+      "picture": "https://picsum.photos/200/300?random=5",
+      "name": "Mollie Santos",
+      "email": "molliesantos@jasper.com",
+      "phone": "+1 (868) 560-2467"
+    },
+    {
+      "id": "628ca469537b8c6d3c9c8110",
+      "picture": "https://picsum.photos/200/300?random=6",
+      "name": "Ayers Sanford",
+      "email": "ayerssanford@jasper.com",
+      "phone": "+1 (930) 484-2480"
+    },
+    {
+      "id": "628ca469b33e5542ecb1da53",
+      "picture": "https://picsum.photos/200/300?random=7",
+      "name": "Angelia Stafford",
+      "email": "angeliastafford@jasper.com",
+      "phone": "+1 (914) 406-2940"
+    }
+  ]
+}
