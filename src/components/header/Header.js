@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 export function Header() {
     return (
-        <div className="header">
+        <div className="header shadow">
               <Navbar bg="light" expand="lg">
                 <Container>
                     <Navbar.Brand href="/users-list">Car Rental</Navbar.Brand>
@@ -14,7 +14,10 @@ export function Header() {
                     <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Link className='nav-link' to="/users-list">Users List</Link>
-                        <Nav.Link href="#link">Link</Nav.Link>
+                        <Link className='nav-link' to="/vehicles-list">Vehicles List</Link>
+                        <Nav.Link href="/vehicles/create">Create Vehicle</Nav.Link>
+                        <Nav.Link className='text-primary' href="/login">Sign in</Nav.Link>
+                        <Nav.Link href="/register">Sign up</Nav.Link>
                     </Nav>
                     </Navbar.Collapse>
                 </Container>

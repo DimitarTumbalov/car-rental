@@ -12,7 +12,7 @@ const rootElement = ReactDOM.createRoot(
 rootElement.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <App/>
     </BrowserRouter>    
   </React.StrictMode>
 )

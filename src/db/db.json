@@ -5,28 +5,84 @@
       "picture": "https://picsum.photos/200/300?random=2",
       "name": "Rosanna Holmes",
       "email": "rosannaholmes@jasper.com",
-      "phone": "+1 (869) 489-2584"
+      "phone": "+1 (869) 489-2584",
+      "password": "123456"
     },
     {
       "id": "628ca46952c5f0a305c1bc41",
       "picture": "https://picsum.photos/200/300?random=5",
       "name": "Mollie Santos",
       "email": "molliesantos@jasper.com",
-      "phone": "+1 (868) 560-2467"
+      "phone": "+1 (868) 560-2467",
+      "password": "123456"
     },
     {
       "id": "628ca469537b8c6d3c9c8110",
       "picture": "https://picsum.photos/200/300?random=6",
       "name": "Ayers Sanford",
       "email": "ayerssanford@jasper.com",
-      "phone": "+1 (930) 484-2480"
+      "phone": "+1 (930) 484-2480",
+      "password": "123456"
     },
     {
       "id": "628ca469b33e5542ecb1da53",
       "picture": "https://picsum.photos/200/300?random=7",
       "name": "Angelia Stafford",
       "email": "angeliastafford@jasper.com",
-      "phone": "+1 (914) 406-2940"
+      "phone": "+1 (914) 406-2940",
+      "password": "123456"
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "629230de9ae72bc829876726",
+      "picture": "https://picsum.photos/320/180?random=2",
+      "brand": "Opel",
+      "model": "2341",
+      "type": "economy",
+      "fuel_type": "electric",
+      "seats": 4,
+      "price_per_day": 100
+    },
+    {
+      "id": "629230dec3621697e05b7c3a",
+      "picture": "https://picsum.photos/320/180?random=3",
+      "brand": "BMW",
+      "model": "234",
+      "type": "estate",
+      "fuel_type": "hybrid",
+      "seats": 2,
+      "price_per_day": 200
+    },
+    {
+      "id": "629230def1914a49a3430f6b",
+      "picture": "https://picsum.photos/320/180?random=4",
+      "brand": "Ford",
+      "model": "123213",
+      "type": "luxury",
+      "fuel_type": "diesel",
+      "seats": 6,
+      "price_per_day": 80
+    },
+    {
+      "id": "629230defd6a36817eb5d190",
+      "picture": "https://picsum.photos/320/180?random=5",
+      "brand": "TOYOTA",
+      "model": "123123",
+      "type": "SUV",
+      "fuel_type": "petrol",
+      "seats": 4,
+      "price_per_day": 150
+    },
+    {
+      "brand": "ford",
+      "model": "1312",
+      "type": "luxury",
+      "picture": "asdas",
+      "fuel_type": "electric",
+      "price_per_day": "0.03",
+      "seats": "4",
+      "id": "vbe8m_q"
     }
   ]
 }

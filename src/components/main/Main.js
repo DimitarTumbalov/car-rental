@@ -1,16 +1,13 @@
 
-import { User } from '../users/user/User';
-import { UsersList } from '../users/users-list/UsersList';
 import './Main.scss';
-import {Route, Routes} from 'react-router-dom'
-
+import {Outlet} from 'react-router-dom'
+import { Container } from 'react-bootstrap';
 export function Main() {
     return (
-        <div className="main-content">
-            <Routes>
-                <Route exact path="/users-list" element={<UsersList/>}/>
-                <Route path="/user/:id" element={<User/>}/>
-            </Routes>
+        <div className="main-content py-4">
+            <Container id='container' fluid="sm">
+                <Outlet/>
+            </Container>
         </div>
     )
 }
