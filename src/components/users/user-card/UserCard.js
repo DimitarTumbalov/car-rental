@@ -14,25 +14,30 @@ export function UserCard({ user, deleteUser }){
         navigate(`/user/${user.id}`)
     }
     
+    const editUserHandler = (e) => {
+        e.stopPropagation() 
+        
+        navigate(`/user/${user.id}/edit`)
+    }
+
     if(!user)
     return <p>No User!</p>
 
     return (
-        <div className="user-card shadow">
+        <div className="user-card shadow" onClick={redirectToDetails}>
             <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={user.picture} />
+            <Card.Img variant="top" src={user.picture} style={{ height: '300px', objectFit: 'cover' }}/>
             <Card.Body>
                 <Card.Title>{user.name}</Card.Title>
             </Card.Body>
             <ListGroup className="list-group-flush">
-                <ListGroupItem>Email: {user.email}</ListGroupItem>
-                <ListGroupItem>Phone: {user.phone}</ListGroupItem>
+                <ListGroupItem><span className='key'>Email:</span> {user.email}</ListGroupItem>
+                <ListGroupItem><span className='key'>Phone:</span> {user.phone}</ListGroupItem>
             </ListGroup>
             <Card.Body>
                 <ButtonGroup>
-                    <Button variant="primary">Edit</Button>
-                    <Button variant="danger" onClick={() => deleteUser(user.id)}>Delete</Button>
-                    <Button variant="info" onClick={redirectToDetails}>Details</Button>
+                    <Button variant="primary" onClick={ (e) => editUserHandler(e) }>Edit</Button>
+                    <Button variant="danger" onClick={(e) => deleteUser(user.id, e)}>Delete</Button>
                 </ButtonGroup>
             </Card.Body>
             </Card>

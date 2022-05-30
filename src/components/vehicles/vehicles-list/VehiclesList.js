@@ -15,7 +15,9 @@ export function VehiclesList(){
  
     }, [])
 
-    const deleteVehicleHandler = async (id) => {
+    const deleteVehicleHandler = async (id, e) => {
+        e.stopPropagation();
+
        await deleteVehicle(id);
        setVehicles(prevState => {
            return prevState.filter(vehicle => vehicle.id !==id)

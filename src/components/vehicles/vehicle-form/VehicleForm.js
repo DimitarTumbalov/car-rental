@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import './VehicleForm.scss';
 import { getVehicleById, saveVehicle } from "../../../utils/http-utils/vehicles-requests";
 import { Col, Row } from "react-bootstrap";
+import DateObject from "react-date-object";
 
 export function VehicleForm() {
     const navigate = useNavigate();
@@ -17,7 +18,8 @@ export function VehicleForm() {
         picture: '',
         fuel_type: '',
         price_per_day: 0,
-        seats: ''
+        seats: 4,
+        updated_at: ''
     });
 
     useEffect(() => {
@@ -29,12 +31,10 @@ export function VehicleForm() {
     }, [params.id]);
 
     const onInputChange = (event) => {
-
-        console.log(event.target.name + ": " + event.target.value)
-
         setVehicle((prevState) => ({
             ...prevState,
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
+            updated_at: getDate()
         }));
     }
 
@@ -43,14 +43,18 @@ export function VehicleForm() {
 
         saveVehicle(vehicle).then(() => {
             navigate('/vehicles-list');
-        });
+        })
+    }
+
+    const getDate = () => {
+        return new DateObject(Date.now()).format("hh:mm A DD-MM-YYYY");
     }
 
     return (
         <Row className="login-wrapper-container justify-content-center align-content-center">
-            <Col md="auto">
+            <Col xs='auto' lg='4'>
                 <Form onSubmit={onVehicleSubmit} className="bg-light p-4 shadow">
-                <h3 className="mb-3">Create vehicle</h3>
+                <h3 className="mb-3">{vehicle.id ? 'Edit vehicle' : 'Create vehicle'}</h3>
 
                     <Form.Group className="mt-2 text-start" controlId="formBasicBrand">
                         <Form.Label>Brand</Form.Label>
@@ -113,7 +117,7 @@ export function VehicleForm() {
                         <Form.Control name="price_per_day" type="number" min="0.00" step="0.01" placeholder="Enter price per day" value={vehicle.price_per_day} onChange={onInputChange} />
                     </Form.Group>
 
-                    <Button variant="primary" className="mt-4" type="submit">{vehicle.id ? 'Edit' : 'Create'}</Button>
+                    <Button variant="primary" className="mt-4" type="submit">{vehicle.id ? 'Save changes' : 'Create vehicle'}</Button>
 
                 </Form>
             </Col>

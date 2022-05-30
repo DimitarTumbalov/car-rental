@@ -2,15 +2,15 @@
   "users": [
     {
       "id": "628ca469f9ac749373f103d4",
-      "picture": "https://picsum.photos/200/300?random=2",
-      "name": "Rosanna Holmes",
+      "picture": "https://picsum.photos/320/180?random=2",
+      "name": "Test User 1",
       "email": "rosannaholmes@jasper.com",
       "phone": "+1 (869) 489-2584",
-      "password": "123456"
+      "password": "12321321"
     },
     {
       "id": "628ca46952c5f0a305c1bc41",
-      "picture": "https://picsum.photos/200/300?random=5",
+      "picture": "https://picsum.photos/320/180?random=5",
       "name": "Mollie Santos",
       "email": "molliesantos@jasper.com",
       "phone": "+1 (868) 560-2467",
@@ -18,18 +18,10 @@
     },
     {
       "id": "628ca469537b8c6d3c9c8110",
-      "picture": "https://picsum.photos/200/300?random=6",
+      "picture": "https://picsum.photos/320/180?random=6",
       "name": "Ayers Sanford",
       "email": "ayerssanford@jasper.com",
       "phone": "+1 (930) 484-2480",
-      "password": "123456"
-    },
-    {
-      "id": "628ca469b33e5542ecb1da53",
-      "picture": "https://picsum.photos/200/300?random=7",
-      "name": "Angelia Stafford",
-      "email": "angeliastafford@jasper.com",
-      "phone": "+1 (914) 406-2940",
       "password": "123456"
     }
   ],
@@ -42,7 +34,8 @@
       "type": "economy",
       "fuel_type": "electric",
       "seats": 4,
-      "price_per_day": 100
+      "price_per_day": 100,
+      "updated_at": "08:53 AM 05-01-2022"
     },
     {
       "id": "629230dec3621697e05b7c3a",
@@ -52,17 +45,8 @@
       "type": "estate",
       "fuel_type": "hybrid",
       "seats": 2,
-      "price_per_day": 200
-    },
-    {
-      "id": "629230def1914a49a3430f6b",
-      "picture": "https://picsum.photos/320/180?random=4",
-      "brand": "Ford",
-      "model": "123213",
-      "type": "luxury",
-      "fuel_type": "diesel",
-      "seats": 6,
-      "price_per_day": 80
+      "price_per_day": 200,
+      "updated_at": "07:25 AM 21-05-2022"
     },
     {
       "id": "629230defd6a36817eb5d190",
@@ -72,17 +56,8 @@
       "type": "SUV",
       "fuel_type": "petrol",
       "seats": 4,
-      "price_per_day": 150
-    },
-    {
-      "brand": "ford",
-      "model": "1312",
-      "type": "luxury",
-      "picture": "asdas",
-      "fuel_type": "electric",
-      "price_per_day": "0.03",
-      "seats": "4",
-      "id": "vbe8m_q"
+      "price_per_day": 150,
+      "updated_at": "12:12 AM 15-01-2022"
     }
   ]
 }
