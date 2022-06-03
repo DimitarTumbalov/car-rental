@@ -42,7 +42,7 @@ export function VehicleForm() {
         event.preventDefault();
 
         saveVehicle(vehicle).then(() => {
-            navigate('/vehicles-list');
+            navigate('/vehicles');
         })
     }
 

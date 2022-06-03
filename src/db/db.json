@@ -23,6 +23,14 @@
       "email": "ayerssanford@jasper.com",
       "phone": "+1 (930) 484-2480",
       "password": "123456"
+    },
+    {
+      "name": "test",
+      "picture": "https://picsum.photos/320/180?random=0.08441988515714094",
+      "email": "test@abv.bg",
+      "phone": "123",
+      "password": "1234",
+      "id": "dHIoH_S"
     }
   ],
   "vehicles": [
@@ -58,6 +66,29 @@
       "seats": 4,
       "price_per_day": 150,
       "updated_at": "12:12 AM 15-01-2022"
+    }
+  ],
+  "rental-events": [
+    {
+      "start_time": "03:00 AM 08-06-2022",
+      "end_time": "12:17 PM 03-06-2022",
+      "user_id": "dHIoH_S",
+      "vehicle_id": "629230de9ae72bc829876726",
+      "id": 17
+    },
+    {
+      "start_time": "03:00 AM 23-06-2022",
+      "end_time": "04:00 AM 03-06-2022",
+      "user_id": "dHIoH_S",
+      "vehicle_id": "629230de9ae72bc829876726",
+      "id": 18
+    },
+    {
+      "start_time": "03:00 AM 22-06-2022",
+      "end_time": "03:00 AM 14-06-2022",
+      "user_id": "dHIoH_S",
+      "vehicle_id": "629230defd6a36817eb5d190",
+      "id": 19
     }
   ]
 }

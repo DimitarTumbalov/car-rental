@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import { UNSAFE_RouteContext, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './VehicleCard.scss'
 import { ButtonGroup, ListGroup } from 'react-bootstrap'
 import { ListGroupItem } from 'react-bootstrap'
@@ -11,17 +11,23 @@ export function VehicleCard({ vehicle, deleteVehicle }){
     const navigate = useNavigate();
 
     const redirectToDetails = () => {
-        navigate(`/vehicle/${vehicle.id}`)
+        navigate(`/vehicle/${vehicle.id}`);
     }
     
     const editVehicleHandler = (e) => {
         e.stopPropagation() 
         
-        navigate(`/vehicle/${vehicle.id}/edit`)
+        navigate(`/vehicle/${vehicle.id}/edit`);
+    }
+
+    const rentVehicleHandler = (e) => {
+        e.stopPropagation() 
+        
+        navigate(`/vehicle/${vehicle.id}/rent`);
     }
 
     if(!vehicle)
-    return <p>No Vehicle!</p>
+        return <p>No Vehicle</p>
 
     return (
         <div className="vehicle-card shadow" onClick={redirectToDetails}>
@@ -37,7 +43,8 @@ export function VehicleCard({ vehicle, deleteVehicle }){
             </ListGroup>
             <Card.Body>
                  <ButtonGroup>
-                    <Button variant="primary" onClick={(e) => { editVehicleHandler(e) }}>Edit</Button>
+                    <Button variant="primary" onClick={ (e) => rentVehicleHandler(e) }>Rent</Button>
+                    <Button variant="dark" onClick={(e) => editVehicleHandler(e) }>Edit</Button>
                     <Button variant="danger" onClick={(e) => deleteVehicle(vehicle.id, e)}>Delete</Button>
                 </ButtonGroup>
             </Card.Body>

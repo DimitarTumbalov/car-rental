@@ -33,7 +33,7 @@ export function Register(){
         event.preventDefault();
 
         registerUser(user).then(() => {
-            navigate('/users-list');
+            navigate('/vehicles');
         })
         .catch(error => setError(error.message));
 

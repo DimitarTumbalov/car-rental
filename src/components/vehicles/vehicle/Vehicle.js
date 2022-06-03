@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Button, ButtonGroup, Col, ListGroup, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { getVehicleById } from "../../../utils/http-utils/vehicles-requests";
+import { deleteVehicle } from "../../../utils/http-utils/vehicles-requests";
 import './Vehicle.scss'
 
-export function Vehicle(props){
+export function Vehicle(){
 
     const params = useParams();
     const [vehicle, setVehicle] = useState(null);
@@ -19,10 +20,24 @@ export function Vehicle(props){
         }
     }, [params.id]);
 
+    const rentVehicleHandler = (e) => {
+        e.stopPropagation() 
+        
+        navigate(`/vehicle/${vehicle.id}/rent`);
+    }
+
     const editVehicleHandler = (e) => {
         e.stopPropagation() 
         
-        navigate(`/vehicle/${vehicle.id}/edit`)
+        navigate(`/vehicle/${vehicle.id}/edit`);
+    }
+
+    const deleteVehicleHandler = (id, e) => {
+        e.stopPropagation();
+
+        deleteVehicle(id).then(
+            navigate(`/vehicles`)
+        );
     }
 
     if(!vehicle)
@@ -46,9 +61,9 @@ export function Vehicle(props){
                         <ListGroup.Item as="li"><b>Seats:</b> {vehicle.seats}</ListGroup.Item>
                         <ListGroup.Item as="li">
                             <ButtonGroup>
-                                <Button variant="primary" onClick={ (e) => editVehicleHandler(e) }>Edit</Button> 
-                                <Button variant="danger">Add to favourites</Button>
-                                <Button variant="warning">Rent</Button>
+                                <Button variant="primary" onClick={ (e) => rentVehicleHandler(e) }>Rent</Button>
+                                <Button variant="dark" onClick={ (e) => editVehicleHandler(e) }>Edit</Button> 
+                                <Button variant="danger" onClick={(e) => deleteVehicleHandler(vehicle.id, e)}>Delete</Button>
                             </ButtonGroup>
                         </ListGroup.Item>
                     </ListGroup>

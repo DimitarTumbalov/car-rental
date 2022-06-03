@@ -47,7 +47,6 @@ export async function login(user) {
     if (!foundUser)
         throw new Error('Invalid username/password');
 
-
     localStorage.setItem('loggedUser', JSON.stringify(foundUser));
 
     return foundUser;

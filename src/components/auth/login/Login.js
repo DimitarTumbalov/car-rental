@@ -26,7 +26,7 @@ export function Login() {
         event.preventDefault();
         
         login(user).then(() => {
-            navigate('/users-list');
+            navigate('/vehicles');
         }).catch(error => setError(error.message))
     }
 

@@ -1,9 +1,22 @@
 import DateObject from "react-date-object";
+import moment from 'moment';
 
 const formatter = "hh:mm A DD-MM-YYYY";
 const formatter2 = "hh:mm A";
 const formatter3 = "DD/MM/YY";
 const formatter4 = "DD/MM";
+
+export function timeMilliesToDate(timeMillies){
+    return new DateObject(timeMillies).format(formatter);
+}
+
+export function isAfter(dateString){
+    const date = new DateObject();
+    date.setFormat(formatter)
+    date.parse(dateString);
+
+    return date.toDate() > Date.now();
+}
 
 export function formatDate(unformattedDate) {
     var now = new DateObject(Date.now());

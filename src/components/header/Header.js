@@ -9,12 +9,12 @@ export function Header() {
         <div className="header shadow">
               <Navbar bg="light" expand="lg">
                 <Container>
-                    <Navbar.Brand href="/users-list">Car Rental</Navbar.Brand>
+                    <Navbar.Brand href="/vehicles">Car Rental</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Link className='nav-link' to="/users-list">Users List</Link>
-                        <Link className='nav-link' to="/vehicles-list">Vehicles List</Link>
+                        <Link className='nav-link' to="/users">Users</Link>
+                        <Link className='nav-link' to="/vehicles">Vehicles</Link>
                         <Nav.Link href="/vehicles/create">Create Vehicle</Nav.Link>
                         <Nav.Link className='text-primary' href="/login">Sign in</Nav.Link>
                         <Nav.Link href="/register">Sign up</Nav.Link>
