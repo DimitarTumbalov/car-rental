@@ -38,7 +38,7 @@ export function VehicleCard({ vehicle, deleteVehicle }){
                 <Card.Title><b>${vehicle.price_per_day} per day</b></Card.Title>
             </Card.Body>
             <ListGroup className="list-group-flush">
-                <ListGroupItem>{vehicle.brand}, {vehicle.model}, {vehicle.type}</ListGroupItem>
+                <ListGroupItem>{vehicle.brand} {vehicle.model}, {vehicle.type}</ListGroupItem>
                 <ListGroupItem>{vehicle.fuel_type}, {vehicle.seats} Seats</ListGroupItem>
             </ListGroup>
             <Card.Body>

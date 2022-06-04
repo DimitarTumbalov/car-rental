@@ -1,4 +1,5 @@
 import axios from 'axios';
+import DateObject from 'react-date-object';
 
 const apiUrl = 'http://localhost:3005/vehicles'
 
@@ -7,6 +8,8 @@ export function deleteVehicle(id) {
 }
 
 export function saveVehicle(vehicle) {
+    let now = new DateObject(Date.now());
+    vehicle.updated_at = now.format("hh:mm A DD-MM-YYYY");
 
     if (!vehicle.picture)
         vehicle.picture = `https://picsum.photos/320/180?random=${Math.random()}`;

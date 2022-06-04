@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getVehicleById } from "../../../utils/http-utils/vehicles-requests";
 import { deleteVehicle } from "../../../utils/http-utils/vehicles-requests";
 import './Vehicle.scss'
+import { formatDate } from '../../../utils/ui-utils/date-formatter'
 
 export function Vehicle(){
 
@@ -45,10 +46,17 @@ export function Vehicle(){
 
     return (
         <div>
-            <Row>
-                <Col><h1><b>{vehicle.brand}</b> {vehicle.model}</h1></Col>
+            <Row className="text-start justify-content-center">
+                <Col xxl='8' xs='10'>
+                    <small className="text-muted">Last updated {formatDate(vehicle.updated_at)}</small>
+                </Col>
             </Row>
-            <Row className="mt-2 justify-content-center">
+            <Row className="text-start justify-content-center mt-4">
+                <Col xxl='8' xs='10'>
+                    <h1><b>{vehicle.brand} {vehicle.model}</b></h1>
+                </Col>
+            </Row>
+            <Row className="mt-4 justify-content-center">
                 <Col xxl={{ span: '4', order: 'first' }} xs={{ span: '10', order: 'second' }}>
                     <ListGroup as="ul" className="bg-light shadow rounded-0">
                         <ListGroup.Item as="li" active>

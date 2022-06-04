@@ -36,7 +36,7 @@ export function UserCard({ user, deleteUser }){
             </ListGroup>
             <Card.Body>
                 <ButtonGroup>
-                    <Button variant="primary" onClick={ (e) => editUserHandler(e) }>Edit</Button>
+                    <Button variant="dark" onClick={ (e) => editUserHandler(e) }>Edit</Button>
                     <Button variant="danger" onClick={(e) => deleteUser(user.id, e)}>Delete</Button>
                 </ButtonGroup>
             </Card.Body>

@@ -37,7 +37,10 @@ export function formatDate(unformattedDate) {
 
     if(updated_at.year == now.year){
         if(updated_at.day != now.day){
-            formattedDate = `on ${updated_at.format(formatter4)} at ${updated_at.format(formatter2)}`;
+            if(now.dayOfYear - updated_at.dayOfYear == 1)
+                formattedDate = `yesterday at ${updated_at.format(formatter2)}`;
+            else
+                formattedDate = `on ${updated_at.format(formatter4)} at ${updated_at.format(formatter2)}`;
         }else{
             if(now.hour == updated_at.hour || (now.hour == updated_at.hour + 1 && now.minute + 60 - updated_at.minute < 60)){
                 if(now.minute == updated_at.minute || (now.second + 60 - updated_at.second) < 60)
