@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
-import { registerUser } from '../../../utils/http-utils/user-requests';
+import { login, registerUser } from '../../../utils/http-utils/user-requests';
 import { Col, Row } from 'react-bootstrap';
 
 export function Register(){
@@ -14,7 +14,8 @@ export function Register(){
         picture: '',
         email: '',
         phone: '',
-        password: ''
+        password: '',
+        role: 'user'
     });
     const [error, setError] = useState('');
 
@@ -33,7 +34,9 @@ export function Register(){
         event.preventDefault();
 
         registerUser(user).then(() => {
-            navigate('/vehicles');
+            login(user).then(() => {
+                navigate('/vehicles');
+            }).catch(navigate('/login'))
         })
         .catch(error => setError(error.message));
 

@@ -24,7 +24,7 @@ export function UserCard({ user, deleteUser }){
     return <p>No User!</p>
 
     return (
-        <div className="user-card shadow" onClick={redirectToDetails}>
+        <div className="user-card shadow rounded" onClick={redirectToDetails}>
             <Card style={{ width: '18rem' }}>
             <Card.Img variant="top" src={user.picture} style={{ height: '300px', objectFit: 'cover' }}/>
             <Card.Body>

@@ -6,7 +6,8 @@
       "name": "Test User2",
       "email": "rosannaholmes@jasper.com",
       "phone": "+1 (869) 489-2584",
-      "password": "1234"
+      "password": "1234",
+      "role": "admin"
     },
     {
       "id": "628ca46952c5f0a305c1bc41",
@@ -14,7 +15,8 @@
       "name": "Mollie Santos",
       "email": "molliesantos@jasper.com",
       "phone": "+1 (868) 560-2467",
-      "password": "123456"
+      "password": "123456",
+      "role": "user"
     },
     {
       "id": "628ca469537b8c6d3c9c8110",
@@ -22,7 +24,8 @@
       "name": "Ayers Sanford",
       "email": "ayerssanford@jasper.com",
       "phone": "+1 (930) 484-2480",
-      "password": "123456"
+      "password": "123456",
+      "role": "user"
     },
     {
       "name": "test",
@@ -30,23 +33,35 @@
       "email": "test@abv.bg",
       "phone": "123",
       "password": "1234",
-      "id": "dHIoH_S"
+      "id": "dHIoH_S",
+      "role": "user"
     },
     {
-      "name": "1",
-      "picture": "https://picsum.photos/320/180?random=0.3290598031134686",
-      "email": "1@avv",
-      "phone": "d",
-      "password": "1",
-      "id": "fNLDDc7"
-    },
-    {
-      "name": "12",
-      "picture": "https://picsum.photos/320/180?random=0.5641312542040595",
-      "email": "12@12",
+      "name": "test",
+      "picture": "https://picsum.photos/320/180?random=0.5802927489686214",
+      "email": "test123@abv.bg",
       "phone": "0878595877",
       "password": "1234",
-      "id": "gZvHw2I"
+      "id": "BybckB2",
+      "role": "admin"
+    },
+    {
+      "name": "test2",
+      "picture": "https://picsum.photos/320/180?random=0.9858150504202572",
+      "email": "test2@abv.bg",
+      "phone": "0878595877",
+      "password": "1234",
+      "role": "user",
+      "id": "6WmK2hJ"
+    },
+    {
+      "name": "test3",
+      "picture": "https://picsum.photos/320/180?random=0.8634695808146038",
+      "email": "test3@abv.bg",
+      "phone": "0878595877",
+      "password": "1234",
+      "role": "user",
+      "id": "ZMr_v4h"
     }
   ],
   "vehicles": [
@@ -82,17 +97,6 @@
       "seats": "4",
       "price_per_day": 150,
       "updated_at": "07:49 PM 04-06-2022"
-    },
-    {
-      "brand": "bmw",
-      "model": "",
-      "type": "",
-      "picture": "https://picsum.photos/320/180?random=0.8617287302274921",
-      "fuel_type": "",
-      "price_per_day": 1,
-      "seats": "4",
-      "updated_at": "07:47 PM 03-06-2022",
-      "id": "So4Z_dX"
     }
   ],
   "rental-events": []

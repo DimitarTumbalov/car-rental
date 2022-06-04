@@ -34,7 +34,7 @@ export function Login() {
         <Row className="login-wrapper-container justify-content-center align-content-center">
             <Col xs='10' sm='8' md='6' lg='4' xxl='3'>
                 <Form onSubmit={onFormSubmit} className="bg-light p-4 shadow">
-                        <h3 className="mb-3">Sign in</h3>
+                        <h3 className="mb-3">Login</h3>
 
                         { error && <span className="text-danger">{error}</span> }
                         <Form.Group className="mt-2 text-start"  controlId="formBasicEmail">
@@ -48,7 +48,7 @@ export function Login() {
                         </Form.Group>
 
                         <Button size="lg" className="mt-4" variant="primary" type="submit">
-                            Sign in
+                        Login
                         </Button>
                         <div className="mt-2">
                             <a href="/register">or create an account</a>

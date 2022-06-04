@@ -30,7 +30,7 @@ export function User(props){
         <Row className="user-wrapper-container justify-content-center align-content-center">
             <div>
                 <Stack className="mx-auto col-xs-10 col-md-8 col-lg-6 col-xxl-4">
-                    <img className="shadow" src={user.picture} style={{width: '100%', height: '300px', objectFit: 'cover'}}></img>
+                    <img className="shadow rounded" src={user.picture} style={{width: '100%', height: '300px', objectFit: 'cover'}}></img>
 
                     <ListGroup as="ul" className="bg-light shadow rounded-0">
                         <ListGroup.Item as="li" active><h3><b>{user.name}</b></h3></ListGroup.Item>

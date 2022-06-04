@@ -30,7 +30,7 @@ export function VehicleCard({ vehicle, deleteVehicle }){
         return <p>No Vehicle</p>
 
     return (
-        <div className="vehicle-card shadow" onClick={redirectToDetails}>
+        <div className="vehicle-card shadow rounded" onClick={redirectToDetails}>
             <Card className='' style={{ width: '18rem' }}>
             <Card.Header className='text-start'><small className="text-muted text-start">Last updated {formatDate(vehicle.updated_at)}</small></Card.Header>
             <Card.Img variant='center' src={vehicle.picture} style={{width: '100%', height: '160px', objectFit: 'cover'}}/>

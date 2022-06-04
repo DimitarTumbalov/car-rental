@@ -11,6 +11,9 @@ import { Vehicle } from './components/vehicles/vehicle/Vehicle';
 import { UserForm } from './components/users/user-form/UserForm';
 import { RentalEventForm } from './components/rental-events/rental-event-form/RentalEventForm';
 import "react-datetime/css/react-datetime.css";
+import { NonAuthenticatedGuard } from './utils/guards/NonAuthenticatedGuard';
+import { AuthenticatedRoute } from './utils/guards/AuthenticatedGuard';
+import { AuthorizedGuard } from './utils/guards/AuthorizedGuard';
 
 function App() {
   return (
@@ -18,26 +21,28 @@ function App() {
         <Routes>
           <Route exact path='/' element={<Layout/>}>
 
-            <Route path='*' element={<VehiclesList/>}/>
+            {/* Default routes */}
+            <Route path='' element={<VehiclesList/>}/>
+            <Route path='*'  element={<VehiclesList/>}/>
 
             {/* Auth */}
-            <Route exact path='/register' element={<Register/>}/>
-            <Route exact path='/login' element={<Login/>}/>
+            <Route exact path='/register' element={<NonAuthenticatedGuard> <Register/> </NonAuthenticatedGuard>}/>
+            <Route exact path='/login' element={<NonAuthenticatedGuard> <Login/> </NonAuthenticatedGuard>}/>
             
             {/* Vehicles */}
             <Route exact path="/vehicles" element={<VehiclesList/>}/>
             <Route path="/vehicle/:id" element={<Vehicle/>}/>
-            <Route path="/vehicle/:id/edit" element={<VehicleForm/>}/>
-            <Route exact path="/vehicles/create" element={<VehicleForm/>}/>
+            <Route path="/vehicle/:id/edit" element={<AuthorizedGuard> <VehicleForm/> </AuthorizedGuard>}/>
+            <Route exact path="/vehicle/create" element={<AuthorizedGuard> <VehicleForm/> </AuthorizedGuard>}/>
 
             {/* Users */}
-            <Route exact path="/users" element={<UsersList/>}/>
-            <Route path="/user/:id" element={<User/>}/>
-            <Route path="/user/:id/edit" element={<UserForm/>}/>
+            <Route exact path="/users" element={<AuthorizedGuard> <UsersList/> </AuthorizedGuard>}/>
+            <Route path="/user/:id" element={<AuthenticatedRoute> <User/> </AuthenticatedRoute>}/>
+            <Route path="/user/:id/edit" element={<AuthenticatedRoute> <UserForm/> </AuthenticatedRoute>}/>
 
             {/* Rental Events */}
-            <Route exact path="/rented" element={<VehiclesList/>}/>
-            <Route exact path="/vehicle/:id/rent" element={<RentalEventForm/>}/>
+            <Route exact path="/rented" element={<AuthenticatedRoute> <VehiclesList/> </AuthenticatedRoute>}/>
+            <Route exact path="/vehicle/:id/rent" element={<AuthenticatedRoute> <RentalEventForm/> </AuthenticatedRoute>}/>
 
           </Route>
         </Routes>
