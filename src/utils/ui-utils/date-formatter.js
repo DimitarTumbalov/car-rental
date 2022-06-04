@@ -18,6 +18,14 @@ export function isAfter(dateString){
     return date.toDate() > Date.now();
 }
 
+export function convertStringToDate(dateString){
+    var date = new DateObject();
+    date.setFormat(formatter);
+    date.parse(dateString);
+
+    return date.toDate();
+}
+
 export function formatDate(unformattedDate) {
     var now = new DateObject(Date.now());
     

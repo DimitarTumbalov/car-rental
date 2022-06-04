@@ -66,29 +66,18 @@
       "seats": 4,
       "price_per_day": 150,
       "updated_at": "12:12 AM 15-01-2022"
+    },
+    {
+      "brand": "bmw",
+      "model": "",
+      "type": "",
+      "picture": "https://picsum.photos/320/180?random=0.8617287302274921",
+      "fuel_type": "",
+      "price_per_day": "1",
+      "seats": 4,
+      "updated_at": "05:18 PM 04-06-2022",
+      "id": "So4Z_dX"
     }
   ],
-  "rental-events": [
-    {
-      "start_time": "03:00 AM 08-06-2022",
-      "end_time": "12:17 PM 03-06-2022",
-      "user_id": "dHIoH_S",
-      "vehicle_id": "629230de9ae72bc829876726",
-      "id": 17
-    },
-    {
-      "start_time": "03:00 AM 23-06-2022",
-      "end_time": "04:00 AM 03-06-2022",
-      "user_id": "dHIoH_S",
-      "vehicle_id": "629230de9ae72bc829876726",
-      "id": 18
-    },
-    {
-      "start_time": "03:00 AM 22-06-2022",
-      "end_time": "03:00 AM 14-06-2022",
-      "user_id": "dHIoH_S",
-      "vehicle_id": "629230defd6a36817eb5d190",
-      "id": 19
-    }
-  ]
+  "rental-events": []
 }

@@ -6,7 +6,7 @@ import { getVehicleById } from '../../../utils/http-utils/vehicles-requests';
 import './RentalEventForm.scss'
 import Datetime from 'react-datetime';
 import moment from 'moment';
-import { timeMilliesToDate } from '../../../utils/ui-utils/date-formatter';
+import { convertStringToDate, timeMilliesToDate } from '../../../utils/ui-utils/date-formatter';
 import { getLoggedUser } from '../../../utils/http-utils/user-requests';
 
 export function RentalEventForm(){
@@ -24,6 +24,9 @@ export function RentalEventForm(){
 
     const [vehicle, setVehicle] = useState(null);
 
+    const [rent_value, setRentValue] = useState('Rent');
+    const [form_message, setFormMessage] = useState('');
+
     useEffect(() => {
         if (vehicle_id) {
             getVehicleById(vehicle_id).then((response) => {
@@ -32,6 +35,52 @@ export function RentalEventForm(){
         }
 
     }, [vehicle_id]);
+
+    useEffect(() => {
+        if(rental_event.start_time != '' && rental_event.end_time != '' && rental_event.start_time <= rental_event.end_time){
+            let startDate = convertStringToDate(rental_event.start_time);
+            let endDate = convertStringToDate(rental_event.end_time);
+
+            let days = Math.floor((endDate - startDate) / (1000*60*60*24)) + 1;
+
+            // More than 3 days - 5% discount
+            // More than 5 days - 7% discount
+            // More than 10 days - 10% discount
+            // If a customer has rented a vehicle more than 3 times in the last 60 days, they would be designated as 
+            // VIP customers and get a discount of 15%
+
+            var discount = 0;
+
+            if(days > 10){
+                discount = 10;
+                setFormMessage('10% discount appplied');
+            }else if (days > 5){
+                discount = 7;
+                setFormMessage('7% discount applied');
+            }else if (days > 3){
+                discount = 5;
+                setFormMessage('5% discount applied');
+            }else {
+                setFormMessage('');
+            }
+
+            var price = days * vehicle.price_per_day;
+
+            if(discount > 0) 
+                price = price - (price * discount) / 100;
+
+            setRentValue(`Rent for $${price}`);
+            
+        }else {
+            if(rental_event.start_time != '' && rental_event.end_time != '')
+                setFormMessage('Please choose a valid period');    
+            else
+                setFormMessage('');
+
+            setRentValue('Rent');
+        }
+
+    }, [rental_event]);
 
     const onInputChange = (dateTime, target) => {
         let time = timeMilliesToDate(dateTime.getTime());
@@ -50,17 +99,19 @@ export function RentalEventForm(){
         })
     }
 
-    const valid = (current) => {
+    const validTime = (current) => {
         let yesterday = moment().subtract( 1, 'day' );
         return current.isAfter( yesterday );
     };
 
     let inputPropsStartTime = {
-        placeholder: 'Start time'
+        placeholder: 'Choose start time',
+        readOnly: true
     };
 
     let inputPropsEndTime = {
-        placeholder: 'End time'
+        placeholder: 'Choose End time',
+        readOnly: true
     };
 
     if(!vehicle)
@@ -76,18 +127,25 @@ export function RentalEventForm(){
                         <Row className="mb-3">
                             <Form.Group as={Col} controlId="formGridEmail" className='text-start'>
                                 <Form.Label>Start time</Form.Label>
-                                <Datetime utc='true' locale="bg" isValidDate={ valid }
+                                <Datetime timeFormat={ false } closeOnSelect={ true } utc={ true } locale="bg" isValidDate={ validTime }
                                  inputProps={ inputPropsStartTime } onChange={ (m) => onInputChange(m.toDate(), 'start_time') } />
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridPassword" className='text-start'>
                                 <Form.Label>End time</Form.Label>
-                                <Datetime utc='true' locale="bg" isValidDate={ valid }
+                                <Datetime timeFormat={ false } closeOnSelect={ true } utc={ true } locale="bg" isValidDate={ validTime }
                                  inputProps={ inputPropsEndTime } onChange={ (m) => onInputChange(m.toDate(), 'end_time') }></Datetime>
                             </Form.Group>
                         </Row>
 
-                        <Button size='lg' variant="primary" className="mt-4" type="submit">{rental_event.id ? 'Save changes' : 'Rent'}</Button>
+                        { form_message != '' &&
+                            <Form.Control className='text-center' plaintext readOnly value={ form_message }/>
+                        }
+
+                        <Button size='lg' variant="primary" className="mt-3" type="submit" 
+                            disabled={ rental_event.start_time === '' || rental_event.end_time === '' || rental_event.start_time > rental_event.end_time }>
+                            { rent_value }
+                        </Button>
 
                     </Form>
                 </Col>
