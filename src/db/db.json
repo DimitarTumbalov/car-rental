@@ -53,6 +53,15 @@
       "password": "1234",
       "role": "user",
       "id": "5c-JQ1m"
+    },
+    {
+      "name": "123",
+      "picture": "https://picsum.photos/320/180?random=0.4945539995731574",
+      "email": "test6@abv.bg",
+      "phone": "123123211231",
+      "password": "1234",
+      "role": "user",
+      "id": "bCVNm2q"
     }
   ],
   "vehicles": [
@@ -115,24 +124,27 @@
   "rental-events": [
     {
       "start_time": "05.06.22",
-      "end_time": "10.06.22",
+      "end_time": "15.06.22",
+      "user_id": "5c-JQ1m",
+      "vehicle_id": "9nX7rxF",
+      "price": "10.30",
+      "id": 4
+    },
+    {
+      "start_time": "08.06.22",
+      "end_time": "20.06.21",
+      "user_id": "5c-JQ1m",
+      "vehicle_id": "629230defd6a36817eb5d190",
+      "price": "1756.40",
+      "id": 5
+    },
+    {
+      "start_time": "10.06.22",
+      "end_time": "01.07.22",
       "user_id": "5c-JQ1m",
       "vehicle_id": "629230dec3621697e05b7c3a",
-      "id": 1
-    },
-    {
-      "start_time": "07.06.22",
-      "end_time": "08.06.22",
-      "user_id": "5c-JQ1m",
-      "vehicle_id": "629230de9ae72bc829876726",
-      "id": 2
-    },
-    {
-      "start_time": "09.06.22",
-      "end_time": "28.06.23",
-      "user_id": "5c-JQ1m",
-      "vehicle_id": "zFclw3y",
-      "id": 3
+      "price": "3740.00",
+      "id": 9
     }
   ]
 }

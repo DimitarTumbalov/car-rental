@@ -18,6 +18,8 @@ export function isAfter(dateString1, dateString2){
 
 export function isAfterNow(dateString){
     let date = convertStringToDate(dateString);
+
+    console.log(`date: ${date.getTime()}, now: ${Date.now()}`)
     
     return date.getTime() > Date.now();
 }

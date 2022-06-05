@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import { saveRentalEvent } from '../../../utils/http-utils/rental-events-requests';
+import { getAllRentalEvents, getRentalEventByUserId, saveRentalEvent } from '../../../utils/http-utils/rental-events-requests';
 import { getVehicleById } from '../../../utils/http-utils/vehicles-requests';
 import './RentalEventForm.scss'
 import Datetime from 'react-datetime';
@@ -21,15 +21,21 @@ export function RentalEventForm(){
         user_id: getLoggedUser()?.id,
         vehicle_id: vehicle_id
     });
-
     const [vehicle, setVehicle] = useState(null);
-
     const [rent_value, setRentValue] = useState('Rent');
     const [form_message, setFormMessage] = useState('');
+    const [rentedCount, setRentedCount] = useState(0);
 
     useEffect(() => {
         if(loggedUser.role != 'user')
             return navigate(`/vehicles`);
+
+        getAllRentalEvents().then(response => {
+            let allRentalEvents = response.data;
+
+            setRentedCount(allRentalEvents.filter( rE => rE.user_id == loggedUser.id).length) 
+        })
+
     }, [])
 
     useEffect(() => {
@@ -56,17 +62,23 @@ export function RentalEventForm(){
 
             var discount = 0;
 
-            if(days > 10){
-                discount = 10;
-                setFormMessage('10% discount appplied');
-            }else if (days > 5){
-                discount = 7;
-                setFormMessage('7% discount applied');
-            }else if (days > 3){
-                discount = 5;
-                setFormMessage('5% discount applied');
-            }else {
-                setFormMessage('');
+            if(rentedCount > 3){
+                discount = 15
+                setFormMessage('15% discount appplied');
+            }else{
+                    
+                if(days > 10){
+                    discount = 10;
+                    setFormMessage('10% discount appplied');
+                }else if (days > 5){
+                    discount = 7;
+                    setFormMessage('7% discount applied');
+                }else if (days > 3){
+                    discount = 5;
+                    setFormMessage('5% discount applied');
+                }else {
+                    setFormMessage('');
+                }
             }
 
             var price = days * vehicle.price_per_day;
@@ -99,7 +111,7 @@ export function RentalEventForm(){
     const onRentaEventSubmit = (event) => {
         event.preventDefault();
 
-        saveRentalEvent(rental_event).then(() => {
+        saveRentalEvent(rental_event, vehicle.price_per_day, rentedCount).then(() => {
             navigate('/rental-events');
         })
     }

@@ -47,6 +47,8 @@ export function Header() {
                             { loggedUser?.role === 'admin' && <Nav.Link className='nav-link' href="/users">Users</Nav.Link>}
                             <Nav.Link className='nav-link' href="/vehicles">Vehicles</Nav.Link>
                             { loggedUser?.role === 'admin' && <Nav.Link href="/vehicle/create">Create Vehicle</Nav.Link>}
+                            { loggedUser?.role != 'admin' && <Nav.Link href="/rented">My rented</Nav.Link>}
+                            { loggedUser?.role === 'admin' && <Nav.Link href="/rented">Rented</Nav.Link>}
                         </Nav>
                         <Nav className='ms-auto' activeKey={location.pathname}>
                             { !loggedUser && <Nav.Link className='text-primary' href="/login">Login</Nav.Link> }

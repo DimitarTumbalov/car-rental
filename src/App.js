@@ -14,6 +14,8 @@ import "react-datetime/css/react-datetime.css";
 import { NonAuthenticatedGuard } from './utils/guards/NonAuthenticatedGuard';
 import { AuthenticatedRoute } from './utils/guards/AuthenticatedGuard';
 import { AuthorizedGuard } from './utils/guards/AuthorizedGuard';
+import { RentalEventCard } from './components/rental-events/rental-event-card/RentalEventCard';
+import { RentalEventsList } from './components/rental-events/rental-events-list/RentalEventsList';
 
 function App() {
   return (
@@ -41,7 +43,7 @@ function App() {
             <Route path="/user/:id/edit" element={<AuthenticatedRoute> <UserForm/> </AuthenticatedRoute>}/>
 
             {/* Rental Events */}
-            <Route exact path="/rented" element={<AuthenticatedRoute> <VehiclesList/> </AuthenticatedRoute>}/>
+            <Route exact path="/rented" element={<AuthenticatedRoute> <RentalEventsList/> </AuthenticatedRoute>}/>
             <Route exact path="/vehicle/:id/rent" element={<AuthenticatedRoute> <RentalEventForm/> </AuthenticatedRoute>}/>
 
           </Route>

@@ -93,8 +93,8 @@ export function VehiclesList(){
         <div>
             <Row className="text-start text-center">
                 <Col>
-                    <h3>Available vehicles{vehicles?.length ? ` (${vehicles?.filter( vehicle => !vehicle.rented).length})` : ''}
-                    { showRentedVehicles && `, Rented (${vehicles?.filter( vehicle => vehicle.rented).length})` }</h3>
+                    <h3><b>Available vehicles{vehicles?.length ? ` (${vehicles?.filter( vehicle => !vehicle.rented).length})` : ''}
+                    { showRentedVehicles && `, Rented (${vehicles?.filter( vehicle => vehicle.rented).length})` }</b></h3>
                 </Col>
             </Row>
             <Row className="justify-content-center mt-2">
