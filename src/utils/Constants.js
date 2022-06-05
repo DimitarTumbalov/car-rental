@@ -1,0 +1,1 @@
+export const VALID_BULGARIAN_PHONE_NUMBER_REGEX = '^[+]?(359|0)8[789][0-9](|-| )[0-9]{3}(|-| )[0-9]{3}$';

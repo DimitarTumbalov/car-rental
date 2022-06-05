@@ -40,6 +40,7 @@ function App() {
             {/* Users */}
             <Route exact path="/users" element={<AuthorizedGuard> <UsersList/> </AuthorizedGuard>}/>
             <Route path="/user/:id" element={<AuthenticatedRoute> <User/> </AuthenticatedRoute>}/>
+            <Route path="/profile" element={<AuthenticatedRoute> <User/> </AuthenticatedRoute>}/>
             <Route path="/user/:id/edit" element={<AuthenticatedRoute> <UserForm/> </AuthenticatedRoute>}/>
 
             {/* Rental Events */}

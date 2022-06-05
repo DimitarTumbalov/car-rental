@@ -1,17 +1,24 @@
+import { useEffect, useState } from 'react';
 import { ListGroup } from 'react-bootstrap';
 import { ListGroupItem } from 'react-bootstrap';
 import { ButtonGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getLoggedUser } from '../../../utils/http-utils/user-requests';
 import './UserCard.scss'
+import defaultAvatar from '../../../images/default_avatar.png';
 
 export function UserCard({ user, deleteUser }){
 
     const navigate = useNavigate();
-
     const loggedUser = getLoggedUser();
+    const[userClassName, setUserClassName] = useState('');
+
+    useEffect(() => {
+        if(user.role === 'admin')
+            setUserClassName('text-danger')
+    }, [])
 
     const redirectToDetails = () => {
         navigate(`/user/${user.id}`)
@@ -29,13 +36,13 @@ export function UserCard({ user, deleteUser }){
     return (
         <div className="user-card shadow rounded" onClick={redirectToDetails}>
             <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={user.picture} style={{ height: '300px', objectFit: 'cover' }}/>
+            <Card.Img variant="top" src={user.picture ? user.picture : defaultAvatar} style={{ height: '300px', objectFit: 'cover' }}/>
             <Card.Body>
-                <Card.Title>{user.name}</Card.Title>
+                <Card.Title className={userClassName}>{user.name}</Card.Title>
             </Card.Body>
             <ListGroup className="list-group-flush">
-                <ListGroupItem><span className='key'>Email:</span> {user.email}</ListGroupItem>
-                <ListGroupItem><span className='key'>Phone:</span> {user.phone}</ListGroupItem>
+                <ListGroupItem><b>Email:</b> {user.email}</ListGroupItem>
+                <ListGroupItem><b>Phone:</b> {user.phone}</ListGroupItem>
             </ListGroup>
             <Card.Body>
                 <ButtonGroup>

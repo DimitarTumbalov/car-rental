@@ -12,9 +12,6 @@ export function deleteUser(id) {
 }
 
 export function saveUser(user) {
-    if (!user.picture)
-        user.picture = `https://picsum.photos/320/180?random=${Math.random()}`;
-
     if (user.id) {
         return axios.put(`${apiUrl}/${user.id}`, user);
     }
@@ -23,10 +20,13 @@ export function saveUser(user) {
 }
 
 export async function registerUser(user) {
-    const existingUsers = (await axios.get(`${apiUrl}?email=${user.email}`)).data;
+    const existingUsersEmail = (await axios.get(`${apiUrl}?email=${user.email}`)).data;
+    const existingUsersPhone = (await axios.get(`${apiUrl}?phone=${user.phone}`)).data;
 
-    if (existingUsers.length > 0) {
+    if (existingUsersEmail.length > 0) {
         throw new Error('User with this email already exists.');
+    }else if(existingUsersPhone.length > 0) {
+        throw new Error('User with this phone number already exists.');
     }
 
     return saveUser(user);

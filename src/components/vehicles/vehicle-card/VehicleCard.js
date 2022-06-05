@@ -6,12 +6,20 @@ import { ButtonGroup, ListGroup } from 'react-bootstrap'
 import { ListGroupItem } from 'react-bootstrap'
 import { formatDate } from '../../../utils/ui-utils/date-formatter'
 import { getLoggedUser } from '../../../utils/http-utils/user-requests'
+import defaultImage from '../../../images/default_image.png';
+import { useEffect } from 'react'
 
 export function VehicleCard({ vehicle, deleteVehicle }){
 
     const navigate = useNavigate();
 
     const loggedUser = getLoggedUser();
+
+    useEffect(() => {
+        if(!vehicle)
+            navigate(`/vehicles`)
+
+    }, [])
 
     const redirectToDetails = () => {
         navigate(`/vehicle/${vehicle.id}`);
@@ -29,20 +37,17 @@ export function VehicleCard({ vehicle, deleteVehicle }){
         navigate(`/vehicle/${vehicle.id}/rent`);
     }
 
-    if(!vehicle)
-        return <p>No Vehicle</p>
-
     return (
         <div className="vehicle-card shadow rounded" onClick={redirectToDetails}>
             <Card className='' style={{ width: '18rem' }}>
-            <Card.Header className='text-start'><small className="text-muted text-start">Last updated {formatDate(vehicle.updated_at)}</small></Card.Header>
-            <Card.Img variant='center' src={vehicle.picture} style={{width: '100%', height: '160px', objectFit: 'cover'}}/>
+            <Card.Header className='text-start'><small className="text-muted text-start">Last updated {formatDate(vehicle.updatedAt)}</small></Card.Header>
+            <Card.Img variant='center' src={vehicle.picture ? vehicle.picture : defaultImage} style={{width: '100%', height: '160px', objectFit: 'cover'}}/>
             <Card.Body>
-                <Card.Title><b>${vehicle.price_per_day} per day</b></Card.Title>
+                <Card.Title><b>${vehicle.pricePerDay} per day</b></Card.Title>
             </Card.Body>
             <ListGroup className="list-group-flush">
-                <ListGroupItem>{vehicle.brand} {vehicle.model}, {vehicle.type}</ListGroupItem>
-                <ListGroupItem>{vehicle.fuel_type}, {vehicle.seats} Seats</ListGroupItem>
+                <ListGroupItem>{vehicle.brand} {vehicle.model}, {vehicle.constructionYear}</ListGroupItem>
+                <ListGroupItem>{vehicle.type}, {vehicle.fuelType}, {vehicle.seats} Seats</ListGroupItem>
             </ListGroup>
             <Card.Body>
                 { loggedUser?.role === 'admin' ? 
@@ -66,7 +71,7 @@ export function VehicleCard({ vehicle, deleteVehicle }){
                     (
                         vehicle.rented ?
                         (
-                            <Button variant="outline-primary" disabled onClick={ (e) => rentVehicleHandler(e) }>RENTED UNTIL {vehicle.rented_until}</Button>
+                            <Button variant="outline-primary" disabled onClick={ (e) => rentVehicleHandler(e) }>RENTED UNTIL {vehicle.rentedUntil}</Button>
                         ) :
                         (
                             <Button variant="primary" onClick={ (e) => rentVehicleHandler(e) }>Rent Vehicle</Button>

@@ -1,12 +1,13 @@
+import './Vehicle.scss'
 import { useEffect, useState } from "react";
 import { Button, ButtonGroup, Col, ListGroup, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { getVehicleById } from "../../../utils/http-utils/vehicles-requests";
 import { deleteVehicle } from "../../../utils/http-utils/vehicles-requests";
-import './Vehicle.scss'
 import { formatDate, isAfter, isAfterNow } from '../../../utils/ui-utils/date-formatter'
 import { getLoggedUser } from "../../../utils/http-utils/user-requests";
 import { getAllRentalEvents } from "../../../utils/http-utils/rental-events-requests";
+import defaultImage from '../../../images/default_image.png';
 
 export function Vehicle(){
 
@@ -25,11 +26,11 @@ export function Vehicle(){
                 getAllRentalEvents().then(response2 => {
                     let rentalEvents = response2.data;
     
-                    let rentalEvent = rentalEvents.find( rentalEvent => rentalEvent.vehicle_id == v.id && isAfterNow(rentalEvent.end_time));
+                    let rentalEvent = rentalEvents.find( rentalEvent => rentalEvent.vehicleId == v.id && isAfterNow(rentalEvent.endTime));
                     
                     if(rentalEvent){
                         v.rented = true;
-                        v.rented_until = rentalEvent.end_time; 
+                        v.rentedUntil = rentalEvent.endTime; 
                     }
 
                     setVehicle(v);
@@ -65,7 +66,7 @@ export function Vehicle(){
         <div>
             <Row className="text-start justify-content-center">
                 <Col xxl='8' xs='10'>
-                    <small className="text-muted">Last updated {formatDate(vehicle.updated_at)}</small>
+                    <small className="text-muted">Last updated {formatDate(vehicle.updatedAt)}</small>
                 </Col>
             </Row>
             <Row className="text-start justify-content-center mt-4">
@@ -74,15 +75,16 @@ export function Vehicle(){
                 </Col>
             </Row>
             <Row className="mt-4 justify-content-center">
-                <Col xxl={{ span: '4', order: 'first' }} xs={{ span: '10', order: 'second' }}>
+                <Col xxl={{ span: '4', order: 'first' }} lg={{ span: '5', order: 'first' }} xs={{ span: '10', order: 'second' }}>
                     <ListGroup as="ul" className="bg-light shadow rounded-0">
                         <ListGroup.Item as="li" active>
-                            <h3><b>${vehicle.price_per_day} per day</b></h3>
+                            <h3><b>${vehicle.pricePerDay} per day</b></h3>
                         </ListGroup.Item>
                         <ListGroup.Item as="li"><b>Brand:</b> {vehicle.brand}</ListGroup.Item>
                         <ListGroup.Item as="li"><b>Model:</b> {vehicle.model}</ListGroup.Item>
+                        <ListGroup.Item as="li"><b>Construction year:</b> {vehicle.constructionYear}</ListGroup.Item>
                         <ListGroup.Item as="li"><b>Type:</b> {vehicle.type}</ListGroup.Item>
-                        <ListGroup.Item as="li"><b>Fuel type:</b> {vehicle.fuel_type}</ListGroup.Item>
+                        <ListGroup.Item as="li"><b>Fuel type:</b> {vehicle.fuelType}</ListGroup.Item>
                         <ListGroup.Item as="li"><b>Seats:</b> {vehicle.seats}</ListGroup.Item>
                         <ListGroup.Item as="li">        
                             { loggedUser?.role === 'admin' ? 
@@ -92,21 +94,21 @@ export function Vehicle(){
                                         <ButtonGroup>
                                             <Button variant="outline-dark" disabled onClick={ (e) => rentVehicleHandler(e) }>RENTED</Button>
                                             <Button variant="dark" onClick={(e) => editVehicleHandler(e) }>Edit</Button>
-                                            <Button variant="danger" onClick={(e) => deleteVehicle(vehicle.id, e)}>Delete</Button>
+                                            <Button variant="danger" onClick={(e) => deleteVehicleHandler(vehicle.id, e)}>Delete</Button>
                                         </ButtonGroup>
                                     ) :
                                     (
                                         <ButtonGroup>
                                             <Button variant="outline-primary" disabled onClick={ (e) => rentVehicleHandler(e) }>FOR RENT</Button>
                                             <Button variant="dark" onClick={(e) => editVehicleHandler(e) }>Edit</Button>
-                                            <Button variant="danger" onClick={(e) => deleteVehicle(vehicle.id, e)}>Delete</Button>
+                                            <Button variant="danger" onClick={(e) => deleteVehicleHandler(vehicle.id, e)}>Delete</Button>
                                         </ButtonGroup>
                                     )
                                 ) :
                                 (
                                     vehicle.rented ?
                                     (
-                                        <Button variant="outline-primary" disabled onClick={ (e) => rentVehicleHandler(e) }>RENTED UNTIL {vehicle.rented_until}</Button>
+                                        <Button variant="outline-primary" disabled onClick={ (e) => rentVehicleHandler(e) }>RENTED UNTIL {vehicle.rentedUntil}</Button>
                                     ) :
                                     (
                                         <Button variant="primary" onClick={ (e) => rentVehicleHandler(e) }>Rent Vehicle</Button>
@@ -117,8 +119,8 @@ export function Vehicle(){
                     </ListGroup>
                 </Col>
 
-                <Col xxl={{ span: '4', order: 'second' }}  xs={{ span: '10', order: 'first' }}>
-                    <img className="shadow" src={vehicle.picture} style={{width: '100%', height: '250px', objectFit: 'cover'}}></img>
+                <Col xxl={{ span: '4', order: 'second' }} lg={{ span: '5', order: 'second' }} xs={{ span: '10', order: 'first' }}>
+                    <img className="shadow" src={vehicle.picture ? vehicle.picture : defaultImage} style={{width: '100%', height: '250px', objectFit: 'cover'}}></img>
                 </Col>
             </Row>
         </div>

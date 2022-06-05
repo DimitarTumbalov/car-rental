@@ -1,11 +1,8 @@
 .vehicle-card{
     margin: 10px;
+    transition: transform .3s;
 }
 .vehicle-card:hover{
     transition: transform .3s;
     transform: scale(1.03);
-}
-
-.key{
-    font-weight: bold;
 }

@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
-import { Button, ButtonGroup, Col, ListGroup, Row, Stack } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
-import { getLoggedUser, getUserById } from "../../../utils/http-utils/user-requests";
+
 import './User.scss'
+import { useEffect, useState } from "react";
+import { Button, ButtonGroup, Card, Col, ListGroup, ListGroupItem, Row, Stack } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
+import { deleteUser, getLoggedUser, getUserById } from "../../../utils/http-utils/user-requests";
+import defaultAvatar from '../../../images/default_avatar.png';
 
 export function User(){
 
@@ -12,12 +14,18 @@ export function User(){
     const loggedUser = getLoggedUser();
 
     useEffect(() => {
-        if(loggedUser.role != 'admin' && loggedUser.id != params.id)
+        if(loggedUser.role != 'admin' && (params.id && loggedUser.id != params.id))
             return navigate(`/users`);
     }, [])
 
     useEffect(() => {
-        getUserById(params.id).then( response => {
+        let paramsId = params.id;
+
+        if(!paramsId)
+            paramsId = loggedUser.id;
+
+
+        getUserById(paramsId).then( response => {
             setUser(response.data);
         })
     }, [params.id])
@@ -28,32 +36,43 @@ export function User(){
         navigate(`/user/${user.id}/edit`)
     }
 
+    const deleteUserHandler = (e) => {
+        e.stopPropagation();
+
+        deleteUser(user.id).then( () => {
+            if(loggedUser.role === 'admin')
+                navigate(`/users`);
+            else
+                navigate(`/users`)
+        });
+    }
+
     if(!user)
         return null;
 
     return (
-        <Row className="user-wrapper-container justify-content-center align-content-center">
-            <div>
-                <Stack className="mx-auto col-xs-10 col-md-8 col-lg-6 col-xxl-4">
-                    <img className="shadow rounded" src={user.picture} style={{width: '100%', height: '300px', objectFit: 'cover'}}></img>
-
-                    <ListGroup as="ul" className="bg-light shadow rounded-0">
-                        <ListGroup.Item as="li" active><h3><b>{user.name}</b></h3></ListGroup.Item>
-                        <ListGroup.Item as="li"><b>Email:</b> {user.email}</ListGroup.Item>
-                        <ListGroup.Item as="li"><b>Phone:</b> {user.phone}</ListGroup.Item>
-                        { (loggedUser.role === 'admin' || loggedUser.id === params.id) && <ListGroup.Item as="li">
-                            <ButtonGroup>
-                                { loggedUser.id === user.id &&
-                                <Button variant="outline-success" disabled>You</Button>
-                                }
-                                <Button variant="dark" onClick={ (e) => editUserHandler(e) }>Edit</Button>
-                                <Button variant="danger">Delete</Button>
-                            </ButtonGroup>
-                        </ListGroup.Item> }
+        <Row className="justify-content-center align-content-center">
+            <Col xs='auto'>
+                <Card className='shadow rounded' style={{ width: '25rem', maxWidth: '100%' }}>
+                <Card.Img variant="top" src={user.picture ? user.picture : defaultAvatar} style={{ height: '370px', objectFit: 'cover' }}/>
+                    <Card.Body className='bg-primary'>
+                        <Card.Title className='text-light'><h3><b>{user.name}</b></h3></Card.Title>
+                    </Card.Body>
+                    <ListGroup className="list-group-flush">
+                        <ListGroupItem><b>Email:</b> {user.email}</ListGroupItem>
+                        <ListGroupItem><b>Phone:</b> {user.phone}</ListGroupItem>
                     </ListGroup>
-
-                </Stack>
-            </div>
+                    <Card.Body>
+                        <ButtonGroup>
+                            { loggedUser.id === user.id &&
+                            <Button variant="outline-success" disabled>You</Button>
+                            }
+                            <Button variant="dark" onClick={ (e) => editUserHandler(e) }>Edit</Button>
+                            <Button variant="danger" onClick={ (e) => deleteUserHandler(e) } >Delete</Button>
+                        </ButtonGroup> 
+                    </Card.Body>
+                </Card>
+            </Col>
         </Row>
     )
 }

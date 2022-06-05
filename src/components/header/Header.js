@@ -21,10 +21,6 @@ export function Header() {
         });
     }
 
-    const goToProfile = () => {
-        navigate(`/user/${loggedUser.id}`)
-    }
-
     return (
         <div className="header shadow">
               <Navbar bg="light" variant="light" expand="lg">
@@ -47,7 +43,7 @@ export function Header() {
                             { loggedUser?.role === 'admin' && <Nav.Link className='nav-link' href="/users">Users</Nav.Link>}
                             <Nav.Link className='nav-link' href="/vehicles">Vehicles</Nav.Link>
                             { loggedUser?.role === 'admin' && <Nav.Link href="/vehicle/create">Create Vehicle</Nav.Link>}
-                            { loggedUser?.role != 'admin' && <Nav.Link href="/rented">My rented</Nav.Link>}
+                            { loggedUser?.role === 'user' && <Nav.Link href="/rented">My rented</Nav.Link>}
                             { loggedUser?.role === 'admin' && <Nav.Link href="/rented">Rented</Nav.Link>}
                         </Nav>
                         <Nav className='ms-auto' activeKey={location.pathname}>
@@ -57,7 +53,7 @@ export function Header() {
                         { loggedUser && <NavDropdown title="Account" id="navbarScrollingDropdown" align='end'>
                             <NavDropdown.Item>Hello <b>{loggedUser.name}</b></NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item  onClick={goToProfile}>See profile</NavDropdown.Item>
+                            <NavDropdown.Item href="/profile">See profile</NavDropdown.Item>
                             <NavDropdown.Item className='text-danger' onClick={logoutHandler}>Logout</NavDropdown.Item>
                         </NavDropdown>}
                         </Nav>

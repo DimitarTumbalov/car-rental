@@ -21,17 +21,17 @@ export function VehiclesList(){
                 let rentalEvents = response2.data;
 
                 allVehicles.forEach(v => {
-                    let rentalEvent = rentalEvents.find( rentalEvent => rentalEvent.vehicle_id == v.id && isAfterNow(rentalEvent.end_time));
+                    let rentalEvent = rentalEvents.find( rentalEvent => rentalEvent.vehicleId == v.id && isAfterNow(rentalEvent.endTime));
                     if(rentalEvent){
                         v.rented = true;
-                        v.rented_until = rentalEvent.end_time; 
+                        v.rentedUntil = rentalEvent.endTime; 
                     }
                 });
                 
                 // default sort by newest
                 allVehicles.sort((a, b) => {
-                    let aDate = convertStringToDateObject(a.updated_at).valueOf();
-                    let bDate = convertStringToDateObject(b.updated_at).valueOf();
+                    let aDate = convertStringToDateObject(a.updatedAt).valueOf();
+                    let bDate = convertStringToDateObject(b.updatedAt).valueOf();
 
                     return bDate - aDate;
                 });
@@ -72,16 +72,16 @@ export function VehiclesList(){
 
         switch(sort){
             case 'price asc': {
-                setVehicles( vehicles.slice().sort((a,b) => { return a.price_per_day - b.price_per_day }));
+                setVehicles( vehicles.slice().sort((a,b) => { return a.pricePerDay - b.pricePerDay }));
             } break;
             case 'price desc': {
-                setVehicles( vehicles.slice().sort((a,b) => { return b.price_per_day - a.price_per_day }));
+                setVehicles( vehicles.slice().sort((a,b) => { return b.pricePerDay - a.pricePerDay }));
             } break;
             default: {
                 setVehicles(
                     vehicles.slice().sort((a,b) => {
-                        let aDate = convertStringToDateObject(a.updated_at).valueOf();
-                        let bDate = convertStringToDateObject(b.updated_at).valueOf();
+                        let aDate = convertStringToDateObject(a.updatedAt).valueOf();
+                        let bDate = convertStringToDateObject(b.updatedAt).valueOf();
                         return bDate - aDate;
                      })
                 );

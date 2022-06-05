@@ -18,9 +18,6 @@ export function isAfter(dateString1, dateString2){
 
 export function isAfterNow(dateString){
     let date = convertStringToDate(dateString);
-
-    console.log(`date: ${date.getTime()}, now: ${Date.now()}`)
-    
     return date.getTime() > Date.now();
 }
 
@@ -47,29 +44,29 @@ export function convertStringToDateObject(dateTimeString){
 export function formatDate(unformattedDate) {
     var now = new DateObject(Date.now());
     
-    var updated_at = new DateObject();
-    updated_at.setFormat(formatter);
-    updated_at.parse(unformattedDate);
+    var updatedAt = new DateObject();
+    updatedAt.setFormat(formatter);
+    updatedAt.parse(unformattedDate);
 
-    var formattedDate = `on ${updated_at.format(formatter3)} at ${updated_at.format(formatter2)}`;
+    var formattedDate = `on ${updatedAt.format(formatter3)} at ${updatedAt.format(formatter2)}`;
 
-    if(updated_at.year == now.year){
-        if(updated_at.dayOfYear != now.dayOfYear){
-            if(now.dayOfYear - updated_at.dayOfYear == 1)
-                formattedDate = `yesterday at ${updated_at.format(formatter2)}`;
+    if(updatedAt.year == now.year){
+        if(updatedAt.dayOfYear != now.dayOfYear){
+            if(now.dayOfYear - updatedAt.dayOfYear == 1)
+                formattedDate = `yesterday at ${updatedAt.format(formatter2)}`;
             else
-                formattedDate = `on ${updated_at.format(formatter4)} at ${updated_at.format(formatter2)}`;
+                formattedDate = `on ${updatedAt.format(formatter4)} at ${updatedAt.format(formatter2)}`;
         }else{
-            if(now.hour == updated_at.hour || (now.hour == updated_at.hour + 1 && now.minute + 60 - updated_at.minute < 60)){
-                if(now.minute == updated_at.minute || (now.second + 60 - updated_at.second) < 60)
+            if(now.hour == updatedAt.hour || (now.hour == updatedAt.hour + 1 && now.minute + 60 - updatedAt.minute < 60)){
+                if(now.minute == updatedAt.minute || (now.second + 60 - updatedAt.second) < 60)
                     formattedDate = "right now";
                 else{
                     var mins = 0
 
-                    if(now.hour == updated_at.hour)
-                        mins = now.minute - updated_at.minute;
+                    if(now.hour == updatedAt.hour)
+                        mins = now.minute - updatedAt.minute;
                     else
-                        mins = now.minute + 60 - updated_at.minute;
+                        mins = now.minute + 60 - updatedAt.minute;
 
                     console.log(mins);
 
@@ -79,7 +76,7 @@ export function formatDate(unformattedDate) {
                         formattedDate = `${mins} minute ago`;
                 }
             } else{
-                formattedDate = `Today at ${updated_at.format(formatter2)} `;
+                formattedDate = `Today at ${updatedAt.format(formatter2)} `;
             }
             
         }

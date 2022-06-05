@@ -20,10 +20,10 @@ export function RentalEventsList(){
                 let allVehicles = response2.data;
 
                 allRentalEvents.forEach(rentalEvent => {
-                    let picture = allVehicles.find( v => v.id == rentalEvent?.vehicle_id).picture
+                    let picture = allVehicles.find( v => v.id == rentalEvent?.vehicleId)?.picture
                     rentalEvent.picture = picture;
 
-                    if(isAfterNow(rentalEvent.end_time))
+                    if(isAfterNow(rentalEvent.endTime))
                         rentalEvent.expired = false;
                     else
                         rentalEvent.expired = true;
@@ -70,8 +70,33 @@ export function RentalEventsList(){
     return (
         <div>
             <Row className="text-start text-center">
-                <Col>
-                    <h3><b>{loggedUser.role != 'admin' ? 'My ' : '' }Rented vehicels{rentalEvents?.length ? ` (${rentalEvents?.length})` : ''}</b></h3>
+                <Col> 
+                    <h3><b>
+                        { loggedUser.role === 'admin' ? 
+                            (
+                                rentalEvents.length ?
+                                    (
+                                        `Rented vehicles (${rentalEvents?.filter( rentalEvent => !rentalEvent.expired ).length})`
+                                    )
+                                    : 
+                                    (
+                                        'Rented vehicles'
+                                    )
+
+                            ) :
+                            (
+                                rentalEvents.length ?
+                                    (
+                                        `My rented vehicles (${rentalEvents?.filter( rentalEvent => rentalEvent.userId == loggedUser.id && !rentalEvent.expired ).length})`
+                                    )
+                                    : 
+                                    (
+                                        'My rented vehicles'
+                                    )
+                            )
+                            
+                        }
+                    </b></h3>
                 </Col>
             </Row>
             <Row className="justify-content-center mt-2">
@@ -90,7 +115,7 @@ export function RentalEventsList(){
                     ?.map(rentalEvent => <RentalEventCard key={rentalEvent.id} rentalEvent={rentalEvent} deleteRentalEvent={deleteRentalEventHandler} /> )
                 ) : (
                     rentalEvents
-                    ?.filter( rentalEvent => rentalEvent.user_id == loggedUser.id)
+                    ?.filter( rentalEvent => rentalEvent.userId == loggedUser.id)
                     ?.map(rentalEvent => <RentalEventCard key={rentalEvent.id} rentalEvent={rentalEvent} deleteRentalEvent={deleteRentalEventHandler} /> )
                 )}
             </Stack>

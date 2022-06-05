@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import { login, registerUser } from '../../../utils/http-utils/user-requests';
 import { Col, Row } from 'react-bootstrap';
+import { VALID_BULGARIAN_PHONE_NUMBER_REGEX } from '../../../utils/Constants';
 
 export function Register(){
 
@@ -19,11 +20,11 @@ export function Register(){
     });
     const [error, setError] = useState('');
 
-    const onInputChange = (event) => {
+    const onInputChange = (e) => {
         setUser((prevState) => {
             return {
                 ...prevState,
-                [event.target.name]: event.target.value
+                [e.target.name]: e.target.value
             }
         });
 
@@ -49,27 +50,29 @@ export function Register(){
                     <h3 className="mb-3">Sign up</h3>
                     { error && <span className="text-danger">{error}</span> }
                     <Form.Group className="mt-2 text-start" controlId="formBasicName">
-                        <Form.Label>Name</Form.Label>
+                        <Form.Label>Name*</Form.Label>
                         <Form.Control minLength={2} maxLength={30} type="text" placeholder="Enter full name" name="name" value={user.name} onChange={onInputChange} required/>
                     </Form.Group>
 
                     <Form.Group className="mt-2 text-start" controlId="formBasicEmail">
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label>Email*</Form.Label>
                         <Form.Control maxLength={50} type="email" placeholder="Enter email" name="email" value={user.email} onChange={onInputChange}  required/>
                     </Form.Group>
 
                     <Form.Group className="mt-2 text-start" controlId="formBasicPicture">
-                        <Form.Label>Picture</Form.Label>
-                        <Form.Control maxLength={100} type="text" placeholder="Enter picture url" name="picture" value={user.picture} onChange={onInputChange} />
+                        <Form.Label>Picture URL</Form.Label>
+                        <Form.Control maxLength={100} type="text" placeholder="Enter picture URL" name="picture" value={user.picture} onChange={onInputChange} />
                     </Form.Group>
 
-                    <Form.Group className="mt-2 text-start" controlId="formBasicPhone">
-                        <Form.Label>Phone</Form.Label>
-                        <Form.Control minLength={10} maxLength={12} type="tel" placeholder="Enter phone number" name="phone" value={user.phone} onChange={onInputChange}  required/>
+                    <Form.Group className="mt-2 text-start" controlId="formBasicPhone" >
+                        <Form.Label>Phone number*</Form.Label>
+                        <Form.Control pattern={VALID_BULGARIAN_PHONE_NUMBER_REGEX} type="tel"
+                        title='Must be a valid bulgarian number'
+                        placeholder="Enter phone number" name="phone" value={user.phone} onChange={onInputChange} required/>
                     </Form.Group>
 
                     <Form.Group className="mt-2 text-start" controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label>Password*</Form.Label>
                         <Form.Control minLength={4} maxLength={15} type="password" placeholder="Enter password" name="password" value={user.passsword} onChange={onInputChange}  required/>
                     </Form.Group>
 

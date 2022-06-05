@@ -9,9 +9,9 @@ export function deleteRentalEvent(id) {
     return axios.delete(`${apiUrl}/${id}`);
 }
 
-export function saveRentalEvent(rental_event, vehicle_price_per_day, user_rented_count) {
-    let startDate = convertStringToDate(rental_event.start_time);
-    let endDate = convertStringToDate(rental_event.end_time);
+export function saveRentalEvent(rentalEvent, vehiclePricePerDay, userRentedCount) {
+    let startDate = convertStringToDate(rentalEvent.startTime);
+    let endDate = convertStringToDate(rentalEvent.endTime);
 
     let days = getDaysBetween(startDate, endDate) + 1;
 
@@ -23,7 +23,7 @@ export function saveRentalEvent(rental_event, vehicle_price_per_day, user_rented
 
     var discount = 0;
 
-    if(user_rented_count > 3){
+    if(userRentedCount > 3){
         discount = 15
     }else{
         if(days > 10)
@@ -36,14 +36,14 @@ export function saveRentalEvent(rental_event, vehicle_price_per_day, user_rented
             discount = 0;
     }
 
-    var price = days * vehicle_price_per_day;
+    var price = days * vehiclePricePerDay;
 
     if(discount > 0) 
         price = price - (price * discount) / 100;
 
-    rental_event.price = price.toFixed(2);
+    rentalEvent.price = price.toFixed(2);
 
-    return axios.post(`${apiUrl}`, rental_event);
+    return axios.post(`${apiUrl}`, rentalEvent);
 }
 
 export function getAllRentalEvents(){

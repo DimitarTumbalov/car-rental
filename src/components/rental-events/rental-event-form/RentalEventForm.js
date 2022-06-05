@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getAllRentalEvents, getRentalEventByUserId, saveRentalEvent } from '../../../utils/http-utils/rental-events-requests';
+import { getAllRentalEvents, getRentalEventByuserId, saveRentalEvent } from '../../../utils/http-utils/rental-events-requests';
 import { getVehicleById } from '../../../utils/http-utils/vehicles-requests';
 import './RentalEventForm.scss'
 import Datetime from 'react-datetime';
@@ -13,13 +13,13 @@ export function RentalEventForm(){
     const navigate = useNavigate();
     const params = useParams();
     const loggedUser = getLoggedUser();
-    const vehicle_id = params.id;
+    const vehicleId = params.id;
 
-    const [rental_event, setRentalEvent] = useState({
-        start_time: '',
-        end_time: '',
-        user_id: getLoggedUser()?.id,
-        vehicle_id: vehicle_id
+    const [rentalEvent, setRentalEvent] = useState({
+        startTime: '',
+        endTime: '',
+        userId: getLoggedUser()?.id,
+        vehicleId: vehicleId
     });
     const [vehicle, setVehicle] = useState(null);
     const [rent_value, setRentValue] = useState('Rent');
@@ -33,24 +33,24 @@ export function RentalEventForm(){
         getAllRentalEvents().then(response => {
             let allRentalEvents = response.data;
 
-            setRentedCount(allRentalEvents.filter( rE => rE.user_id == loggedUser.id).length) 
+            setRentedCount(allRentalEvents.filter( rE => rE.userId == loggedUser.id).length) 
         })
 
     }, [])
 
     useEffect(() => {
-        if (vehicle_id) {
-            getVehicleById(vehicle_id).then((response) => {
+        if (vehicleId) {
+            getVehicleById(vehicleId).then((response) => {
                 setVehicle(response.data);
             });
         }
 
-    }, [vehicle_id]);
+    }, [vehicleId]);
 
     useEffect(() => {
-        if(rental_event.start_time != '' && rental_event.end_time != '' && !isAfter(rental_event.start_time, rental_event.end_time)){
-            let startDate = convertStringToDate(rental_event.start_time);
-            let endDate = convertStringToDate(rental_event.end_time);
+        if(rentalEvent.startTime != '' && rentalEvent.endTime != '' && !isAfter(rentalEvent.startTime, rentalEvent.endTime)){
+            let startDate = convertStringToDate(rentalEvent.startTime);
+            let endDate = convertStringToDate(rentalEvent.endTime);
 
             let days = getDaysBetween(startDate, endDate) + 1;
 
@@ -81,7 +81,7 @@ export function RentalEventForm(){
                 }
             }
 
-            var price = days * vehicle.price_per_day;
+            var price = days * vehicle.pricePerDay;
 
             if(discount > 0) 
                 price = price - (price * discount) / 100;
@@ -89,7 +89,7 @@ export function RentalEventForm(){
             setRentValue(`Rent for $${price.toFixed(2)}`);
             
         }else {
-            if(rental_event.start_time != '' && rental_event.end_time != '')
+            if(rentalEvent.startTime != '' && rentalEvent.endTime != '')
                 setFormMessage('Please choose a valid period');    
             else
                 setFormMessage('');
@@ -97,7 +97,7 @@ export function RentalEventForm(){
             setRentValue('Rent');
         }
 
-    }, [rental_event]);
+    }, [rentalEvent]);
 
     const onInputChange = (dateTime, target) => {
         let time = timeMilliesToDate(dateTime.getTime());
@@ -111,7 +111,7 @@ export function RentalEventForm(){
     const onRentaEventSubmit = (event) => {
         event.preventDefault();
 
-        saveRentalEvent(rental_event, vehicle.price_per_day, rentedCount).then(() => {
+        saveRentalEvent(rentalEvent, vehicle.pricePerDay, rentedCount).then(() => {
             navigate('/rental-events');
         })
     }
@@ -126,7 +126,7 @@ export function RentalEventForm(){
         readOnly: true
     };
 
-    let inputPropsEndTime = {
+    let inputPropsendTime = {
         placeholder: 'Choose End time',
         readOnly: true
     };
@@ -139,19 +139,19 @@ export function RentalEventForm(){
             <Row className="login-wrapper-container justify-content-center align-content-center">
                 <Col xs='auto' sm='10' xxl='8'>
                     <Form className="bg-light p-4 shadow" onSubmit={ onRentaEventSubmit } >
-                    <h3 className="mb-3">{rental_event.id ? 'Edit rental event' : 'Rent vehicle'}</h3>
+                    <h3 className="mb-3">{rentalEvent.id ? 'Edit rental event' : 'Rent vehicle'}</h3>
 
                         <Row className="mb-3">
                             <Form.Group as={Col} controlId="formGridEmail" className='text-start'>
                                 <Form.Label>Start time</Form.Label>
                                 <Datetime dateFormat={ 'DD.MM.YY' } timeFormat={ false } closeOnSelect={ true } utc={ true } locale="bg" isValidDate={ validTime }
-                                 inputProps={ inputPropsStartTime } onChange={ (m) => onInputChange(m.toDate(), 'start_time') } />
+                                 inputProps={ inputPropsStartTime } onChange={ (m) => onInputChange(m.toDate(), 'startTime') } />
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridPassword" className='text-start'>
                                 <Form.Label>End time</Form.Label>
                                 <Datetime dateFormat={ 'DD.MM.YY' } timeFormat={ false } closeOnSelect={ true } utc={ true } locale="bg" isValidDate={ validTime }
-                                 inputProps={ inputPropsEndTime } onChange={ (m) => onInputChange(m.toDate(), 'end_time') }></Datetime>
+                                 inputProps={ inputPropsendTime } onChange={ (m) => onInputChange(m.toDate(), 'endTime') }></Datetime>
                             </Form.Group>
                         </Row>
 
@@ -160,7 +160,7 @@ export function RentalEventForm(){
                         }
 
                         <Button size='lg' variant="primary" className="mt-3" type="submit" 
-                            disabled={ rental_event.start_time === '' || rental_event.end_time === '' || isAfter(rental_event.start_time, rental_event.end_time) }>
+                            disabled={ rentalEvent.startTime === '' || rentalEvent.endTime === '' || isAfter(rentalEvent.startTime, rentalEvent.endTime) }>
                             { rent_value }
                         </Button>
 
@@ -172,12 +172,12 @@ export function RentalEventForm(){
                 <Col xxl={{ span: '4', order: 'first' }} xs={{ span: '10', order: 'second' }}>
                     <ListGroup as="ul" className="bg-light shadow rounded-0">
                         <ListGroup.Item as="li" active>
-                            <h3><b>${vehicle.price_per_day} per day</b></h3>
+                            <h3><b>${vehicle.pricePerDay} per day</b></h3>
                         </ListGroup.Item>
                         <ListGroup.Item as="li"><b>Brand:</b> {vehicle.brand}</ListGroup.Item>
                         <ListGroup.Item as="li"><b>Model:</b> {vehicle.model}</ListGroup.Item>
                         <ListGroup.Item as="li"><b>Type:</b> {vehicle.type}</ListGroup.Item>
-                        <ListGroup.Item as="li"><b>Fuel type:</b> {vehicle.fuel_type}</ListGroup.Item>
+                        <ListGroup.Item as="li"><b>Fuel type:</b> {vehicle.fuelType}</ListGroup.Item>
                         <ListGroup.Item as="li"><b>Seats:</b> {vehicle.seats}</ListGroup.Item>
                     </ListGroup>
                 </Col>

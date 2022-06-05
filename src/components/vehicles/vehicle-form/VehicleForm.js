@@ -9,17 +9,18 @@ import { Col, Row } from "react-bootstrap";
 export function VehicleForm() {
     const navigate = useNavigate();
     const params = useParams();
-
     const [vehicle, setVehicle] = useState({
         brand: '',
         model: '',
+        constructionYear: '1990',
         type: '',
         picture: '',
-        fuel_type: '',
-        price_per_day: 0.00,
+        fuelType: '',
+        pricePerDay: '100',
         seats: '',
-        updated_at: ''
+        updatedAt: ''
     });
+    const [maxConstructionYear, setMaxConstructionYear] = useState(new Date().getFullYear());
 
     useEffect(() => {
         if (params.id) {
@@ -30,6 +31,7 @@ export function VehicleForm() {
     }, [params.id]);
 
     const onInputChange = (event) => {
+        console.log(event.target.value);
         setVehicle((prevState) => ({
             ...prevState,
             [event.target.name]: event.target.value
@@ -68,6 +70,11 @@ export function VehicleForm() {
                         <Form.Control maxLength={20} value={vehicle.model} onChange={onInputChange} name="model" type="text" placeholder="Enter model" required />
                     </Form.Group>
 
+                    <Form.Group className="mt-2 text-start" controlId="formBasicPricePerDay">
+                        <Form.Label>Construction year*</Form.Label>
+                        <Form.Control name="constructionYear" type="number" min="1990" step='1' max={maxConstructionYear} placeholder="Enter construction year"
+                        value={vehicle.constructionYear} onChange={onInputChange} required />
+                    </Form.Group>
 
                     <Form.Group className="mt-2 text-start" controlId="formBasicType">
                         <Form.Label>Type*</Form.Label>
@@ -88,7 +95,7 @@ export function VehicleForm() {
 
                     <Form.Group className="mt-2 text-start" controlId="formBasicFuelType">
                         <Form.Label>Fuel type*</Form.Label>
-                        <Form.Select name="fuel_type" value={vehicle.fuel_type} onChange={onInputChange} required>
+                        <Form.Select name="fuelType" value={vehicle.fuelType} onChange={onInputChange} required>
                             <option value="" disabled>Select fuel type</option>
                             <option value="petrol">Petrol</option>
                             <option value="diesel">Diesel</option>
@@ -113,7 +120,7 @@ export function VehicleForm() {
 
                     <Form.Group className="mt-2 text-start" controlId="formBasicPricePerDay">
                         <Form.Label>Price per day*</Form.Label>
-                        <Form.Control name="price_per_day" type="number" min="1.00" step="0.01" max="1000000" placeholder="Enter price per day" value={vehicle.price_per_day} onChange={onInputChange} required />
+                        <Form.Control name="pricePerDay" type="number" min="1.00" step="0.01" max="1000000" placeholder="Enter price per day" value={vehicle.pricePerDay} onChange={onInputChange} required />
                     </Form.Group>
 
                     <Button size="lg" variant="primary" className="mt-4" type="submit">{vehicle.id ? 'Save changes' : 'Create vehicle'}</Button>

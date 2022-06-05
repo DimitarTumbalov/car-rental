@@ -9,7 +9,7 @@ export function deleteVehicle(id) {
 
 export function saveVehicle(vehicle) {
     let now = new DateObject(Date.now());
-    vehicle.updated_at = now.format("hh:mm A DD-MM-YYYY");
+    vehicle.updatedAt = now.format("hh:mm A DD.MM.YY");
 
     if (!vehicle.picture)
         vehicle.picture = `https://picsum.photos/320/180?random=${Math.random()}`;
