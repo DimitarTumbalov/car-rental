@@ -22,7 +22,7 @@ function App() {
           <Route exact path='/' element={<Layout/>}>
 
             {/* Default routes */}
-            <Route path='' element={<VehiclesList/>}/>
+            <Route exact path='' element={<VehiclesList/>}/>
             <Route path='*'  element={<VehiclesList/>}/>
 
             {/* Auth */}

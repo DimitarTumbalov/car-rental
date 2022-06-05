@@ -16,7 +16,7 @@ export function VehicleForm() {
         type: '',
         picture: '',
         fuel_type: '',
-        price_per_day: 0,
+        price_per_day: 0.00,
         seats: '',
         updated_at: ''
     });
@@ -38,6 +38,8 @@ export function VehicleForm() {
 
     const onVehicleSubmit = (event) => {
         event.preventDefault();
+
+        console.log(vehicle);
 
         saveVehicle(vehicle).then(() => {
             navigate('/vehicles');
@@ -111,7 +113,7 @@ export function VehicleForm() {
 
                     <Form.Group className="mt-2 text-start" controlId="formBasicPricePerDay">
                         <Form.Label>Price per day*</Form.Label>
-                        <Form.Control name="price_per_day" type="number" min="1.00" max="1000000" step="5" placeholder="Enter price per day" value={vehicle.price_per_day} onChange={onInputChange} required />
+                        <Form.Control name="price_per_day" type="number" min="1.00" step="0.01" max="1000000" placeholder="Enter price per day" value={vehicle.price_per_day} onChange={onInputChange} required />
                     </Form.Group>
 
                     <Button size="lg" variant="primary" className="mt-4" type="submit">{vehicle.id ? 'Save changes' : 'Create vehicle'}</Button>

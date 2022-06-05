@@ -6,13 +6,13 @@ import { getVehicleById } from '../../../utils/http-utils/vehicles-requests';
 import './RentalEventForm.scss'
 import Datetime from 'react-datetime';
 import moment from 'moment';
-import { convertStringToDate, timeMilliesToDate } from '../../../utils/ui-utils/date-formatter';
+import { convertStringToDate, getDaysBetween, isAfter, timeMilliesToDate } from '../../../utils/ui-utils/date-formatter';
 import { getLoggedUser } from '../../../utils/http-utils/user-requests';
 
 export function RentalEventForm(){
     const navigate = useNavigate();
     const params = useParams();
-
+    const loggedUser = getLoggedUser();
     const vehicle_id = params.id;
 
     const [rental_event, setRentalEvent] = useState({
@@ -28,6 +28,11 @@ export function RentalEventForm(){
     const [form_message, setFormMessage] = useState('');
 
     useEffect(() => {
+        if(loggedUser.role != 'user')
+            return navigate(`/vehicles`);
+    }, [])
+
+    useEffect(() => {
         if (vehicle_id) {
             getVehicleById(vehicle_id).then((response) => {
                 setVehicle(response.data);
@@ -37,11 +42,11 @@ export function RentalEventForm(){
     }, [vehicle_id]);
 
     useEffect(() => {
-        if(rental_event.start_time != '' && rental_event.end_time != '' && rental_event.start_time <= rental_event.end_time){
+        if(rental_event.start_time != '' && rental_event.end_time != '' && !isAfter(rental_event.start_time, rental_event.end_time)){
             let startDate = convertStringToDate(rental_event.start_time);
             let endDate = convertStringToDate(rental_event.end_time);
 
-            let days = Math.floor((endDate - startDate) / (1000*60*60*24)) + 1;
+            let days = getDaysBetween(startDate, endDate) + 1;
 
             // More than 3 days - 5% discount
             // More than 5 days - 7% discount
@@ -69,7 +74,7 @@ export function RentalEventForm(){
             if(discount > 0) 
                 price = price - (price * discount) / 100;
 
-            setRentValue(`Rent for $${price}`);
+            setRentValue(`Rent for $${price.toFixed(2)}`);
             
         }else {
             if(rental_event.start_time != '' && rental_event.end_time != '')
@@ -127,13 +132,13 @@ export function RentalEventForm(){
                         <Row className="mb-3">
                             <Form.Group as={Col} controlId="formGridEmail" className='text-start'>
                                 <Form.Label>Start time</Form.Label>
-                                <Datetime timeFormat={ false } closeOnSelect={ true } utc={ true } locale="bg" isValidDate={ validTime }
+                                <Datetime dateFormat={ 'DD.MM.YY' } timeFormat={ false } closeOnSelect={ true } utc={ true } locale="bg" isValidDate={ validTime }
                                  inputProps={ inputPropsStartTime } onChange={ (m) => onInputChange(m.toDate(), 'start_time') } />
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridPassword" className='text-start'>
                                 <Form.Label>End time</Form.Label>
-                                <Datetime timeFormat={ false } closeOnSelect={ true } utc={ true } locale="bg" isValidDate={ validTime }
+                                <Datetime dateFormat={ 'DD.MM.YY' } timeFormat={ false } closeOnSelect={ true } utc={ true } locale="bg" isValidDate={ validTime }
                                  inputProps={ inputPropsEndTime } onChange={ (m) => onInputChange(m.toDate(), 'end_time') }></Datetime>
                             </Form.Group>
                         </Row>
@@ -143,7 +148,7 @@ export function RentalEventForm(){
                         }
 
                         <Button size='lg' variant="primary" className="mt-3" type="submit" 
-                            disabled={ rental_event.start_time === '' || rental_event.end_time === '' || rental_event.start_time > rental_event.end_time }>
+                            disabled={ rental_event.start_time === '' || rental_event.end_time === '' || isAfter(rental_event.start_time, rental_event.end_time) }>
                             { rent_value }
                         </Button>
 

@@ -4,7 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getVehicleById } from "../../../utils/http-utils/vehicles-requests";
 import { deleteVehicle } from "../../../utils/http-utils/vehicles-requests";
 import './Vehicle.scss'
-import { formatDate } from '../../../utils/ui-utils/date-formatter'
+import { formatDate, isAfter, isAfterNow } from '../../../utils/ui-utils/date-formatter'
+import { getLoggedUser } from "../../../utils/http-utils/user-requests";
+import { getAllRentalEvents } from "../../../utils/http-utils/rental-events-requests";
 
 export function Vehicle(){
 
@@ -13,10 +15,25 @@ export function Vehicle(){
 
     const navigate = useNavigate();
 
+    const loggedUser = getLoggedUser();
+
     useEffect(() => {
         if (params.id) {
-            getVehicleById(params.id).then((response) => {
-                setVehicle(response.data);
+            getVehicleById(params.id).then(response => {
+                let v = response.data;
+
+                getAllRentalEvents().then(response2 => {
+                    let rentalEvents = response2.data;
+    
+                    let rentalEvent = rentalEvents.find( rentalEvent => rentalEvent.vehicle_id == v.id && isAfterNow(rentalEvent.end_time));
+                    
+                    if(rentalEvent){
+                        v.rented = true;
+                        v.rented_until = rentalEvent.end_time; 
+                    }
+
+                    setVehicle(v);
+                })
             });
         }
     }, [params.id]);
@@ -67,12 +84,35 @@ export function Vehicle(){
                         <ListGroup.Item as="li"><b>Type:</b> {vehicle.type}</ListGroup.Item>
                         <ListGroup.Item as="li"><b>Fuel type:</b> {vehicle.fuel_type}</ListGroup.Item>
                         <ListGroup.Item as="li"><b>Seats:</b> {vehicle.seats}</ListGroup.Item>
-                        <ListGroup.Item as="li">
-                            <ButtonGroup>
-                                <Button variant="primary" onClick={ (e) => rentVehicleHandler(e) }>Rent</Button>
-                                <Button variant="dark" onClick={ (e) => editVehicleHandler(e) }>Edit</Button> 
-                                <Button variant="danger" onClick={(e) => deleteVehicleHandler(vehicle.id, e)}>Delete</Button>
-                            </ButtonGroup>
+                        <ListGroup.Item as="li">        
+                            { loggedUser?.role === 'admin' ? 
+                                (
+                                    vehicle.rented ?
+                                    (
+                                        <ButtonGroup>
+                                            <Button variant="outline-dark" disabled onClick={ (e) => rentVehicleHandler(e) }>RENTED</Button>
+                                            <Button variant="dark" onClick={(e) => editVehicleHandler(e) }>Edit</Button>
+                                            <Button variant="danger" onClick={(e) => deleteVehicle(vehicle.id, e)}>Delete</Button>
+                                        </ButtonGroup>
+                                    ) :
+                                    (
+                                        <ButtonGroup>
+                                            <Button variant="outline-primary" disabled onClick={ (e) => rentVehicleHandler(e) }>FOR RENT</Button>
+                                            <Button variant="dark" onClick={(e) => editVehicleHandler(e) }>Edit</Button>
+                                            <Button variant="danger" onClick={(e) => deleteVehicle(vehicle.id, e)}>Delete</Button>
+                                        </ButtonGroup>
+                                    )
+                                ) :
+                                (
+                                    vehicle.rented ?
+                                    (
+                                        <Button variant="outline-primary" disabled onClick={ (e) => rentVehicleHandler(e) }>RENTED UNTIL {vehicle.rented_until}</Button>
+                                    ) :
+                                    (
+                                        <Button variant="primary" onClick={ (e) => rentVehicleHandler(e) }>Rent Vehicle</Button>
+                                    )
+                                )
+                            }
                         </ListGroup.Item>
                     </ListGroup>
                 </Col>

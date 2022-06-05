@@ -46,22 +46,13 @@
       "role": "admin"
     },
     {
-      "name": "test2",
-      "picture": "https://picsum.photos/320/180?random=0.9858150504202572",
-      "email": "test2@abv.bg",
-      "phone": "0878595877",
+      "name": "test5",
+      "picture": "https://picsum.photos/320/180?random=0.8827799222482902",
+      "email": "test5@abv.bg",
+      "phone": "12341234112",
       "password": "1234",
       "role": "user",
-      "id": "6WmK2hJ"
-    },
-    {
-      "name": "test3",
-      "picture": "https://picsum.photos/320/180?random=0.8634695808146038",
-      "email": "test3@abv.bg",
-      "phone": "0878595877",
-      "password": "1234",
-      "role": "user",
-      "id": "ZMr_v4h"
+      "id": "5c-JQ1m"
     }
   ],
   "vehicles": [
@@ -73,8 +64,8 @@
       "type": "economy",
       "fuel_type": "electric",
       "seats": "4",
-      "price_per_day": 100,
-      "updated_at": "08:53 AM 05-01-2022"
+      "price_per_day": "126",
+      "updated_at": "01:12 PM 05.02.22"
     },
     {
       "id": "629230dec3621697e05b7c3a",
@@ -85,7 +76,7 @@
       "fuel_type": "hybrid",
       "seats": "2",
       "price_per_day": 200,
-      "updated_at": "07:47 PM 04-06-2022"
+      "updated_at": "07:47 PM 04.06.22"
     },
     {
       "id": "629230defd6a36817eb5d190",
@@ -95,9 +86,53 @@
       "type": "SUV",
       "fuel_type": "petrol",
       "seats": "4",
-      "price_per_day": 150,
-      "updated_at": "07:49 PM 04-06-2022"
+      "price_per_day": "150.12",
+      "updated_at": "01:16 PM 05.06.21"
+    },
+    {
+      "brand": "bmw",
+      "model": "123",
+      "type": "suv",
+      "picture": "https://picsum.photos/320/180?random=0.015663412457606496",
+      "fuel_type": "hybrid",
+      "price_per_day": "6",
+      "seats": "12",
+      "updated_at": "01:08 PM 05.06.22",
+      "id": "zFclw3y"
+    },
+    {
+      "brand": "bmw",
+      "model": "123",
+      "type": "estate",
+      "picture": "https://picsum.photos/320/180?random=0.8009204236065557",
+      "fuel_type": "diesel",
+      "price_per_day": "1.04",
+      "seats": "12",
+      "updated_at": "04:40 PM 05.06.22",
+      "id": "9nX7rxF"
     }
   ],
-  "rental-events": []
+  "rental-events": [
+    {
+      "start_time": "05.06.22",
+      "end_time": "10.06.22",
+      "user_id": "5c-JQ1m",
+      "vehicle_id": "629230dec3621697e05b7c3a",
+      "id": 1
+    },
+    {
+      "start_time": "07.06.22",
+      "end_time": "08.06.22",
+      "user_id": "5c-JQ1m",
+      "vehicle_id": "629230de9ae72bc829876726",
+      "id": 2
+    },
+    {
+      "start_time": "09.06.22",
+      "end_time": "28.06.23",
+      "user_id": "5c-JQ1m",
+      "vehicle_id": "zFclw3y",
+      "id": 3
+    }
+  ]
 }

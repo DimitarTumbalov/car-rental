@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getUserById, saveUser } from '../../../utils/http-utils/user-requests';
+import { getLoggedUser, getUserById, saveUser } from '../../../utils/http-utils/user-requests';
 import './UserForm.scss'
 
 export function UserForm(){
@@ -9,6 +9,12 @@ export function UserForm(){
     const [user, setUser] = useState(null);
     const [error, setError] = useState('');
     const params = useParams();
+    const loggedUser = getLoggedUser();
+
+    useEffect(() => {
+        if(loggedUser.role != 'admin' && loggedUser.id != params.id)
+            return navigate(`/users`);
+    }, [])
 
     useEffect(() => {
         if (params.id) {

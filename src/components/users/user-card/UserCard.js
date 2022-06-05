@@ -4,11 +4,14 @@ import { ButtonGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import { useNavigate } from 'react-router-dom'
+import { getLoggedUser } from '../../../utils/http-utils/user-requests';
 import './UserCard.scss'
 
 export function UserCard({ user, deleteUser }){
 
     const navigate = useNavigate();
+
+    const loggedUser = getLoggedUser();
 
     const redirectToDetails = () => {
         navigate(`/user/${user.id}`)
@@ -21,7 +24,7 @@ export function UserCard({ user, deleteUser }){
     }
 
     if(!user)
-    return <p>No User!</p>
+        return <p>No User!</p>
 
     return (
         <div className="user-card shadow rounded" onClick={redirectToDetails}>
@@ -36,9 +39,12 @@ export function UserCard({ user, deleteUser }){
             </ListGroup>
             <Card.Body>
                 <ButtonGroup>
+                    { loggedUser.id === user.id &&
+                     <Button variant="outline-success" disabled>You</Button>
+                    }
                     <Button variant="dark" onClick={ (e) => editUserHandler(e) }>Edit</Button>
                     <Button variant="danger" onClick={(e) => deleteUser(user.id, e)}>Delete</Button>
-                </ButtonGroup>
+                </ButtonGroup> 
             </Card.Body>
             </Card>
 

@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 import { Button, ButtonGroup, Col, ListGroup, Row, Stack } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserById } from "../../../utils/http-utils/user-requests";
-import { UserCard } from "../user-card/UserCard";
+import { getLoggedUser, getUserById } from "../../../utils/http-utils/user-requests";
 import './User.scss'
 
-export function User(props){
+export function User(){
 
     const params = useParams();
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
+    const loggedUser = getLoggedUser();
+
+    useEffect(() => {
+        if(loggedUser.role != 'admin' && loggedUser.id != params.id)
+            return navigate(`/users`);
+    }, [])
 
     useEffect(() => {
         getUserById(params.id).then( response => {
@@ -36,12 +41,15 @@ export function User(props){
                         <ListGroup.Item as="li" active><h3><b>{user.name}</b></h3></ListGroup.Item>
                         <ListGroup.Item as="li"><b>Email:</b> {user.email}</ListGroup.Item>
                         <ListGroup.Item as="li"><b>Phone:</b> {user.phone}</ListGroup.Item>
-                        <ListGroup.Item as="li">
+                        { (loggedUser.role === 'admin' || loggedUser.id === params.id) && <ListGroup.Item as="li">
                             <ButtonGroup>
+                                { loggedUser.id === user.id &&
+                                <Button variant="outline-success" disabled>You</Button>
+                                }
                                 <Button variant="dark" onClick={ (e) => editUserHandler(e) }>Edit</Button>
                                 <Button variant="danger">Delete</Button>
                             </ButtonGroup>
-                        </ListGroup.Item>
+                        </ListGroup.Item> }
                     </ListGroup>
 
                 </Stack>

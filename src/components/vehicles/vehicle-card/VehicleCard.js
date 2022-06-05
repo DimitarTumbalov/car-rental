@@ -5,10 +5,13 @@ import './VehicleCard.scss'
 import { ButtonGroup, ListGroup } from 'react-bootstrap'
 import { ListGroupItem } from 'react-bootstrap'
 import { formatDate } from '../../../utils/ui-utils/date-formatter'
+import { getLoggedUser } from '../../../utils/http-utils/user-requests'
 
 export function VehicleCard({ vehicle, deleteVehicle }){
 
     const navigate = useNavigate();
+
+    const loggedUser = getLoggedUser();
 
     const redirectToDetails = () => {
         navigate(`/vehicle/${vehicle.id}`);
@@ -42,11 +45,34 @@ export function VehicleCard({ vehicle, deleteVehicle }){
                 <ListGroupItem>{vehicle.fuel_type}, {vehicle.seats} Seats</ListGroupItem>
             </ListGroup>
             <Card.Body>
-                 <ButtonGroup>
-                    <Button variant="primary" onClick={ (e) => rentVehicleHandler(e) }>Rent</Button>
-                    <Button variant="dark" onClick={(e) => editVehicleHandler(e) }>Edit</Button>
-                    <Button variant="danger" onClick={(e) => deleteVehicle(vehicle.id, e)}>Delete</Button>
-                </ButtonGroup>
+                { loggedUser?.role === 'admin' ? 
+                    (
+                        vehicle.rented ?
+                        (
+                            <ButtonGroup>
+                                <Button variant="outline-dark" disabled onClick={ (e) => rentVehicleHandler(e) }>RENTED</Button>
+                                <Button variant="dark" onClick={(e) => editVehicleHandler(e) }>Edit</Button>
+                                <Button variant="danger" onClick={(e) => deleteVehicle(vehicle.id, e)}>Delete</Button>
+                            </ButtonGroup>
+                        ) :
+                        (
+                            <ButtonGroup>
+                                <Button variant="outline-primary" disabled onClick={ (e) => rentVehicleHandler(e) }>FOR RENT</Button>
+                                <Button variant="dark" onClick={(e) => editVehicleHandler(e) }>Edit</Button>
+                                <Button variant="danger" onClick={(e) => deleteVehicle(vehicle.id, e)}>Delete</Button>
+                            </ButtonGroup>
+                        )
+                    ) :
+                    (
+                        vehicle.rented ?
+                        (
+                            <Button variant="outline-primary" disabled onClick={ (e) => rentVehicleHandler(e) }>RENTED UNTIL {vehicle.rented_until}</Button>
+                        ) :
+                        (
+                            <Button variant="primary" onClick={ (e) => rentVehicleHandler(e) }>Rent Vehicle</Button>
+                        )
+                    )
+                }
             </Card.Body>
             </Card>
 

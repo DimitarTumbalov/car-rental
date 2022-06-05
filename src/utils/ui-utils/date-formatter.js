@@ -1,29 +1,45 @@
 import DateObject from "react-date-object";
-import moment from 'moment';
 
-const formatter = "hh:mm A DD-MM-YYYY";
+var formatter = "hh:mm A DD.MM.YY";
 const formatter2 = "hh:mm A";
-const formatter3 = "DD/MM/YY";
-const formatter4 = "DD/MM";
+const formatter3 = "DD.MM.YY";
+const formatter4 = "DD.MM";
 
 export function timeMilliesToDate(timeMillies){
-    return new DateObject(timeMillies).format(formatter);
+    return new DateObject(timeMillies).format(formatter3);
 }
 
-export function isAfter(dateString){
-    const date = new DateObject();
-    date.setFormat(formatter)
-    date.parse(dateString);
+export function isAfter(dateString1, dateString2){
+    let date1 = convertStringToDate(dateString1);
+    let date2 = convertStringToDate(dateString2);
 
-    return date.toDate() > Date.now();
+    return date1 > date2;
+}
+
+export function isAfterNow(dateString){
+    let date = convertStringToDate(dateString);
+    
+    return date.getTime() > Date.now();
+}
+
+export function getDaysBetween(startDate, endDate){
+    return Math.floor((endDate - startDate) / (1000*60*60*24));
 }
 
 export function convertStringToDate(dateString){
     var date = new DateObject();
-    date.setFormat(formatter);
+    date.setFormat(formatter3);
     date.parse(dateString);
 
     return date.toDate();
+}
+
+export function convertStringToDateObject(dateTimeString){
+    var date = new DateObject();
+    date.setFormat(formatter);
+    date.parse(dateTimeString);
+
+    return date;
 }
 
 export function formatDate(unformattedDate) {
@@ -36,7 +52,7 @@ export function formatDate(unformattedDate) {
     var formattedDate = `on ${updated_at.format(formatter3)} at ${updated_at.format(formatter2)}`;
 
     if(updated_at.year == now.year){
-        if(updated_at.day != now.day){
+        if(updated_at.dayOfYear != now.dayOfYear){
             if(now.dayOfYear - updated_at.dayOfYear == 1)
                 formattedDate = `yesterday at ${updated_at.format(formatter2)}`;
             else

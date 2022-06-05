@@ -50,7 +50,7 @@ export function Register(){
                     { error && <span className="text-danger">{error}</span> }
                     <Form.Group className="mt-2 text-start" controlId="formBasicName">
                         <Form.Label>Name</Form.Label>
-                        <Form.Control minLength={2} maxLength={30} type="text" placeholder="Enter name" name="name" value={user.name} onChange={onInputChange} required/>
+                        <Form.Control minLength={2} maxLength={30} type="text" placeholder="Enter full name" name="name" value={user.name} onChange={onInputChange} required/>
                     </Form.Group>
 
                     <Form.Group className="mt-2 text-start" controlId="formBasicEmail">
