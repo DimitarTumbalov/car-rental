@@ -1,16 +1,17 @@
 import './RentalEventsList.scss'
 import { useEffect, useState } from "react";
-import { Col, Form, Row, Stack } from "react-bootstrap";
+import { Button, Col, Form, Modal, Row, Stack } from "react-bootstrap";
 import { deleteRentalEvent, getAllRentalEvents } from "../../../utils/http-utils/rental-events-requests"
 import { getLoggedUser } from '../../../utils/http-utils/user-requests';
 import { RentalEventCard } from '../rental-event-card/RentalEventCard';
 import { getAllVehicles } from '../../../utils/http-utils/vehicles-requests';
-import { isAfter, isAfterNow } from '../../../utils/ui-utils/date-formatter';
+import { isAfterNow } from '../../../utils/ui-utils/date-formatter';
 
 export function RentalEventsList(){
     const [rentalEvents, setRentalEvents] = useState([]);
     const [sort, setSort] = useState('');
     const loggedUser = getLoggedUser();
+    const [deleteModal, setDeleteModal] = useState({show: false, id: null});
     
     useEffect(() => {
         getAllRentalEvents().then(response => {
@@ -42,13 +43,30 @@ export function RentalEventsList(){
         sortRentalEvents();
     }, [sort])
 
-    const deleteRentalEventHandler = async (id, e) => {
+    const showDeleteModalHandler = (id, e) => {
         e.stopPropagation();
-
-        await deleteRentalEvent(id);
-        setRentalEvents(prevState => {
-            return prevState.filter(rentalEvent => rentalEvent.id !==id)
+        
+        setDeleteModal({
+            show: true,
+            id: id
         });
+    }
+
+    const closeDeleteModalHandler = (confirmed) => {
+        if(confirmed)
+            deleteRentalEventHandler(deleteModal.id);
+        else
+            setDeleteModal({show: false,  id: null });
+    }
+
+    const deleteRentalEventHandler = async () => {
+        await deleteRentalEvent(deleteModal.id);
+
+        setRentalEvents(prevState => {
+            return prevState.filter(rentalEvent => rentalEvent.id !== deleteModal.id)
+        });
+
+       setDeleteModal({show: false,  id: null });
     }
 
     const onSortChange = (e) => {
@@ -56,8 +74,6 @@ export function RentalEventsList(){
     }
 
     const sortRentalEvents = () => {
-        console.log(sort);
-
         if(sort == 'price asc'){
             setRentalEvents( rentalEvents.slice().sort((a,b) => { return a.price - b.price }));
         }else if(sort == 'price desc'){
@@ -112,13 +128,27 @@ export function RentalEventsList(){
             <Stack direction="horizontal" gap={2} className="d-flex flex-wrap justify-content-center mt-3">
                 { (loggedUser.role === 'admin') ? (
                     rentalEvents
-                    ?.map(rentalEvent => <RentalEventCard key={rentalEvent.id} rentalEvent={rentalEvent} deleteRentalEvent={deleteRentalEventHandler} /> )
+                    ?.map(rentalEvent => <RentalEventCard key={rentalEvent.id} rentalEvent={rentalEvent} deleteRentalEvent={ showDeleteModalHandler } /> )
                 ) : (
                     rentalEvents
                     ?.filter( rentalEvent => rentalEvent.userId == loggedUser.id)
-                    ?.map(rentalEvent => <RentalEventCard key={rentalEvent.id} rentalEvent={rentalEvent} deleteRentalEvent={deleteRentalEventHandler} /> )
+                    ?.map(rentalEvent => <RentalEventCard key={rentalEvent.id} rentalEvent={rentalEvent} deleteRentalEvent={ showDeleteModalHandler } /> )
                 )}
             </Stack>
+            <Modal show={deleteModal.show} onHide={() => closeDeleteModalHandler(false)} centered>
+                <Modal.Header closeButton>
+                <Modal.Title>Cancel rental event</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to cancel this rental event?</Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={() => closeDeleteModalHandler(false)}>
+                    Abort
+                </Button>
+                <Button variant="danger" onClick={() => closeDeleteModalHandler(true)}>
+                    Confirm
+                </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }

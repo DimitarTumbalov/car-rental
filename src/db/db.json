@@ -1,17 +1,8 @@
 {
   "users": [
     {
-      "id": "628ca469f9ac749373f103d4",
-      "picture": "",
-      "name": "Test User2",
-      "email": "rosannaholmes@jasper.com",
-      "phone": "+1 (869) 489-2584",
-      "password": "1234",
-      "role": "admin"
-    },
-    {
       "name": "test",
-      "picture": "https://picsum.photos/320/180?random=0.5802927489686214",
+      "picture": "",
       "email": "test123@abv.bg",
       "phone": "0878595827",
       "password": "1234",
@@ -19,17 +10,8 @@
       "role": "admin"
     },
     {
-      "name": "test5",
-      "picture": "https://picsum.photos/320/180?random=0.8827799222482902",
-      "email": "test5@abv.bg",
-      "phone": "12341234112",
-      "password": "1234",
-      "role": "user",
-      "id": "5c-JQ1m"
-    },
-    {
       "name": "123",
-      "picture": "https://picsum.photos/320/180?random=0.4945539995731574",
+      "picture": "",
       "email": "test6@abv.bg",
       "phone": "123123211231",
       "password": "1234",
@@ -38,7 +20,7 @@
     },
     {
       "name": "123213",
-      "picture": "https://picsum.photos/320/180?random=0.42187149368568955",
+      "picture": "",
       "email": "test123@abv.bg1",
       "phone": "0878595877",
       "password": "1234",
@@ -46,13 +28,13 @@
       "id": "CYOOKeR"
     },
     {
-      "name": "123",
-      "picture": "",
-      "email": "test123213@abv.bg",
-      "phone": "+359878595877",
+      "name": "12312314",
+      "picture": "qw",
+      "email": "qw@adasd",
+      "phone": "359878595877",
       "password": "1234",
       "role": "user",
-      "id": "OiSQltc"
+      "id": "iBO0O5e"
     }
   ],
   "vehicles": [
@@ -61,7 +43,7 @@
       "model": "123",
       "constructionYear": "2020",
       "type": "luxury",
-      "picture": "https://picsum.photos/320/180?random=0.590457245611753",
+      "picture": "",
       "fuelType": "hybrid",
       "pricePerDay": "1.02",
       "seats": "8",
@@ -73,7 +55,7 @@
       "model": "123123",
       "constructionYear": "1990",
       "type": "suv",
-      "picture": "https://picsum.photos/320/180?random=0.6215998661894535",
+      "picture": "",
       "fuelType": "petrol",
       "pricePerDay": "1.02",
       "seats": "4",
@@ -85,7 +67,7 @@
       "model": "13123123",
       "constructionYear": "1990",
       "type": "luxury",
-      "picture": "https://picsum.photos/320/180?random=0.46411183007239454",
+      "picture": "",
       "fuelType": "diesel",
       "pricePerDay": "100",
       "seats": "4",
@@ -93,59 +75,43 @@
       "id": 3
     },
     {
-      "brand": "ford",
-      "model": "100",
-      "constructionYear": "2000",
-      "type": "estate",
-      "picture": "https://picsum.photos/320/180?random=0.38869100515062716",
+      "brand": "bmw",
+      "model": "123",
+      "constructionYear": "1990",
+      "type": "luxury",
+      "picture": "",
       "fuelType": "petrol",
-      "pricePerDay": "1000",
-      "seats": "6",
-      "updatedAt": "01:42 AM 06.06.21",
+      "pricePerDay": "100",
+      "seats": "8",
+      "updatedAt": "11:45 AM 06.06.22",
       "id": 4
     },
     {
-      "brand": "ford",
-      "model": "123123",
-      "constructionYear": "2003",
-      "type": "luxury",
-      "picture": "https://picsum.photos/320/180?random=0.6843729483376815",
+      "brand": "bmw",
+      "model": "1",
+      "constructionYear": "1990",
+      "type": "cargo",
+      "picture": "",
       "fuelType": "hybrid",
-      "pricePerDay": "99.95",
+      "pricePerDay": "100",
       "seats": "6",
-      "updatedAt": "01:44 AM 06.06.22",
+      "updatedAt": "12:21 PM 06.06.22",
       "id": 5
     },
     {
-      "brand": "ford",
-      "model": "12312312",
+      "brand": "toyota",
+      "model": "1312321",
       "constructionYear": "1990",
-      "type": "estate",
-      "picture": "https://picsum.photos/320/180?random=0.651934789805404",
-      "fuelType": "petrol",
-      "pricePerDay": "500",
-      "seats": "1",
-      "updatedAt": "01:44 AM 06.06.22",
+      "type": "suv",
+      "picture": "",
+      "fuelType": "electric",
+      "pricePerDay": "100",
+      "seats": "6",
+      "updatedAt": "12:21 PM 06.06.22",
       "id": 6
     }
   ],
   "rental-events": [
-    {
-      "startTime": "07.06.22",
-      "endTime": "07.06.22",
-      "userId": "bCVNm2q",
-      "vehicleId": "5",
-      "price": "99.95",
-      "id": 1
-    },
-    {
-      "startTime": "24.06.22",
-      "endTime": "30.06.22",
-      "userId": "bCVNm2q",
-      "vehicleId": "6",
-      "price": "3255.00",
-      "id": 2
-    },
     {
       "startTime": "06.06.22",
       "endTime": "30.06.22",
@@ -153,6 +119,22 @@
       "vehicleId": "2",
       "price": "22.95",
       "id": 3
+    },
+    {
+      "startTime": "06.06.22",
+      "endTime": "29.06.22",
+      "userId": "bCVNm2q",
+      "vehicleId": "5",
+      "price": "2160.00",
+      "id": 4
+    },
+    {
+      "startTime": "14.06.22",
+      "endTime": "28.06.22",
+      "userId": "bCVNm2q",
+      "vehicleId": "4",
+      "price": "1350.00",
+      "id": 5
     }
   ]
 }

@@ -5,7 +5,7 @@ const formatter2 = "hh:mm A";
 const formatter3 = "DD.MM.YY";
 const formatter4 = "DD.MM";
 
-export function timeMilliesToDate(timeMillies){
+export function timeMilliesToDateObject(timeMillies){
     return new DateObject(timeMillies).format(formatter3);
 }
 
@@ -22,7 +22,7 @@ export function isAfterNow(dateString){
 }
 
 export function getDaysBetween(startDate, endDate){
-    return Math.floor((endDate - startDate) / (1000*60*60*24));
+    return Math.abs(Math.floor((endDate - startDate) / (1000*60*60*24)));
 }
 
 export function convertStringToDate(dateString){
@@ -67,8 +67,6 @@ export function formatDate(unformattedDate) {
                         mins = now.minute - updatedAt.minute;
                     else
                         mins = now.minute + 60 - updatedAt.minute;
-
-                    console.log(mins);
 
                     if(mins > 1)
                         formattedDate = `${mins} minutes ago`;

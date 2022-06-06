@@ -6,7 +6,7 @@ import { getVehicleById } from '../../../utils/http-utils/vehicles-requests';
 import './RentalEventForm.scss'
 import Datetime from 'react-datetime';
 import moment from 'moment';
-import { convertStringToDate, getDaysBetween, isAfter, timeMilliesToDate } from '../../../utils/ui-utils/date-formatter';
+import { convertStringToDate, getDaysBetween, isAfter, timeMilliesToDateObject } from '../../../utils/ui-utils/date-formatter';
 import { getLoggedUser } from '../../../utils/http-utils/user-requests';
 
 export function RentalEventForm(){
@@ -32,8 +32,12 @@ export function RentalEventForm(){
 
         getAllRentalEvents().then(response => {
             let allRentalEvents = response.data;
+            
+            // Get the number of recent rental events for this user
+            let recentRentalEvents = allRentalEvents.filter( rE => rE.userId == loggedUser.id
+                 && getDaysBetween(new Date(), convertStringToDate(rE.endTime)) < 60);
 
-            setRentedCount(allRentalEvents.filter( rE => rE.userId == loggedUser.id).length) 
+            setRentedCount(recentRentalEvents.length) 
         })
 
     }, [])
@@ -100,7 +104,7 @@ export function RentalEventForm(){
     }, [rentalEvent]);
 
     const onInputChange = (dateTime, target) => {
-        let time = timeMilliesToDate(dateTime.getTime());
+        let time = timeMilliesToDateObject(dateTime.getTime());
 
         setRentalEvent((prevState) => ({
             ...prevState,

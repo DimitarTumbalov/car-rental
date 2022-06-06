@@ -31,7 +31,6 @@ export function VehicleForm() {
     }, [params.id]);
 
     const onInputChange = (event) => {
-        console.log(event.target.value);
         setVehicle((prevState) => ({
             ...prevState,
             [event.target.name]: event.target.value
@@ -40,8 +39,6 @@ export function VehicleForm() {
 
     const onVehicleSubmit = (event) => {
         event.preventDefault();
-
-        console.log(vehicle);
 
         saveVehicle(vehicle).then(() => {
             navigate('/vehicles');

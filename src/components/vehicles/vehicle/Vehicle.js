@@ -1,6 +1,6 @@
 import './Vehicle.scss'
 import { useEffect, useState } from "react";
-import { Button, ButtonGroup, Col, ListGroup, Row } from "react-bootstrap";
+import { Button, ButtonGroup, Col, ListGroup, Modal, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { getVehicleById } from "../../../utils/http-utils/vehicles-requests";
 import { deleteVehicle } from "../../../utils/http-utils/vehicles-requests";
@@ -13,9 +13,8 @@ export function Vehicle(){
 
     const params = useParams();
     const [vehicle, setVehicle] = useState(null);
-
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const navigate = useNavigate();
-
     const loggedUser = getLoggedUser();
 
     useEffect(() => {
@@ -51,12 +50,23 @@ export function Vehicle(){
         navigate(`/vehicle/${vehicle.id}/edit`);
     }
 
-    const deleteVehicleHandler = (id, e) => {
+    const showDeleteModalHandler = (e) => {
         e.stopPropagation();
+        
+        setShowDeleteModal(true);
+    }
 
-        deleteVehicle(id).then(
+    const closeDeleteModalHandler = (confirmed) => {
+        setShowDeleteModal(false);
+
+        if(confirmed)
+            deleteVehicleHandler();
+    }
+
+    const deleteVehicleHandler = async () => {
+        deleteVehicle(vehicle.id).then(
             navigate(`/vehicles`)
-        );
+        )   
     }
 
     if(!vehicle)
@@ -89,21 +99,18 @@ export function Vehicle(){
                         <ListGroup.Item as="li">        
                             { loggedUser?.role === 'admin' ? 
                                 (
-                                    vehicle.rented ?
-                                    (
-                                        <ButtonGroup>
-                                            <Button variant="outline-dark" disabled onClick={ (e) => rentVehicleHandler(e) }>RENTED</Button>
-                                            <Button variant="dark" onClick={(e) => editVehicleHandler(e) }>Edit</Button>
-                                            <Button variant="danger" onClick={(e) => deleteVehicleHandler(vehicle.id, e)}>Delete</Button>
-                                        </ButtonGroup>
-                                    ) :
-                                    (
-                                        <ButtonGroup>
-                                            <Button variant="outline-primary" disabled onClick={ (e) => rentVehicleHandler(e) }>FOR RENT</Button>
-                                            <Button variant="dark" onClick={(e) => editVehicleHandler(e) }>Edit</Button>
-                                            <Button variant="danger" onClick={(e) => deleteVehicleHandler(vehicle.id, e)}>Delete</Button>
-                                        </ButtonGroup>
-                                    )
+                                    <ButtonGroup>
+                                        { vehicle.rented ? 
+                                            (
+                                                <Button variant="outline-dark" disabled>RENTED</Button>
+                                            ) : 
+                                            (
+                                                <Button variant="outline-dark" disabled>FOR RENT</Button>
+                                            )
+                                        }
+                                        <Button variant="dark" onClick={(e) => editVehicleHandler(e) }>Edit</Button>
+                                        <Button variant="danger" onClick={(e) => showDeleteModalHandler(e)}>Delete</Button>
+                                    </ButtonGroup>
                                 ) :
                                 (
                                     vehicle.rented ?
@@ -123,6 +130,21 @@ export function Vehicle(){
                     <img className="shadow" src={vehicle.picture ? vehicle.picture : defaultImage} style={{width: '100%', height: '250px', objectFit: 'cover'}}></img>
                 </Col>
             </Row>
+
+            <Modal show={showDeleteModal} onHide={() => closeDeleteModalHandler(false)} centered>
+                <Modal.Header closeButton>
+                <Modal.Title>Delete vehicle</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to delete this vehicle?</Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={() => closeDeleteModalHandler(false)}>
+                    Cancel
+                </Button>
+                <Button variant="danger" onClick={() => closeDeleteModalHandler(true)}>
+                    Delete
+                </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }

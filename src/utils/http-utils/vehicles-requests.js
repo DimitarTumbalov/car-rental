@@ -11,9 +11,6 @@ export function saveVehicle(vehicle) {
     let now = new DateObject(Date.now());
     vehicle.updatedAt = now.format("hh:mm A DD.MM.YY");
 
-    if (!vehicle.picture)
-        vehicle.picture = `https://picsum.photos/320/180?random=${Math.random()}`;
-
     if (vehicle.id) {
         return axios.put(`${apiUrl}/${vehicle.id}`, vehicle);
     }

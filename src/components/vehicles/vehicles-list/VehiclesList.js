@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Form, Row, Stack } from "react-bootstrap";
+import { Button, Col, Form, Modal, ModalDialog, Row, Stack } from "react-bootstrap";
 import { getAllRentalEvents } from "../../../utils/http-utils/rental-events-requests";
 import { deleteVehicle, getAllVehicles } from "../../../utils/http-utils/vehicles-requests";
 import { convertStringToDateObject, isAfterNow } from "../../../utils/ui-utils/date-formatter";
@@ -11,6 +11,7 @@ export function VehiclesList(){
     const [vehicles, setVehicles] = useState([]);
     const [showRentedVehicles, setShowRentedVehicles] = useState(false);
     const [sort, setSort] = useState('');
+    const [deleteModal, setDeleteModal] = useState({show: false, id: null});
 
     useEffect(() => {
         getAllVehicles().then(response => {
@@ -47,13 +48,30 @@ export function VehiclesList(){
         sortVehicles();
     }, [sort])
 
-    const deleteVehicleHandler = async (id, e) => {
+    const showDeleteModalHandler = (id, e) => {
         e.stopPropagation();
+        
+        setDeleteModal({
+            show: true,
+            id: id
+        });
+    }
 
-       await deleteVehicle(id);
+    const closeDeleteModalHandler = (confirmed) => {
+        if(confirmed)
+            deleteVehicleHandler(deleteModal.id);
+        else
+            setDeleteModal({show: false,  id: null });
+    }
+
+    const deleteVehicleHandler = async () => {
+       await deleteVehicle(deleteModal.id);
+
        setVehicles(prevState => {
-           return prevState.filter(vehicle => vehicle.id !==id)
+           return prevState.filter(vehicle => vehicle.id !== deleteModal.id)
        });
+
+       setDeleteModal({show: false,  id: null });
     }
 
     const onShowRentedVehiclesChange = (e) => {
@@ -68,8 +86,6 @@ export function VehiclesList(){
     }
 
     const sortVehicles = () => {
-        console.log(sort);
-
         switch(sort){
             case 'price asc': {
                 setVehicles( vehicles.slice().sort((a,b) => { return a.pricePerDay - b.pricePerDay }));
@@ -113,13 +129,28 @@ export function VehiclesList(){
             <Stack direction="horizontal" gap={2} className="d-flex flex-wrap justify-content-center mt-3">
                 { (showRentedVehicles) ? (
                     vehicles
-                    ?.map(vehicle => <VehicleCard key={vehicle.id} vehicle={vehicle} deleteVehicle={deleteVehicleHandler} /> )
+                    ?.map(vehicle => <VehicleCard key={vehicle.id} vehicle={vehicle} deleteVehicle={ showDeleteModalHandler } /> )
                 ) : (
                     vehicles
                     ?.filter( vehicle => !vehicle.rented)
-                    ?.map(vehicle => <VehicleCard key={vehicle.id} vehicle={vehicle} deleteVehicle={deleteVehicleHandler} />)
+                    ?.map(vehicle => <VehicleCard key={vehicle.id} vehicle={vehicle} deleteVehicle={ showDeleteModalHandler } />)
                 )}
             </Stack>
+
+            <Modal show={deleteModal.show} onHide={() => closeDeleteModalHandler(false)} centered>
+                <Modal.Header closeButton>
+                <Modal.Title>Delete vehicle</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to delete this vehicle?</Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={() => closeDeleteModalHandler(false)}>
+                    Cancel
+                </Button>
+                <Button variant="danger" onClick={() => closeDeleteModalHandler(true)}>
+                    Delete
+                </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }

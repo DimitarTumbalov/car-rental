@@ -5,4 +5,5 @@
 .vehicle-card:hover{
     transition: transform .3s;
     transform: scale(1.03);
+    cursor: pointer;
 }
