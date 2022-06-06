@@ -71,7 +71,7 @@ export function VehicleCard({ vehicle, deleteVehicle }){
                     (
                         vehicle.rented ?
                         (
-                            <Button variant="outline-primary" disabled onClick={ (e) => rentVehicleHandler(e) }>RENTED UNTIL {vehicle.rentedUntil}</Button>
+                            <Button variant="outline-primary" disabled onClick={ (e) => rentVehicleHandler(e) }><small>RENTED UNTIL {vehicle.rentedUntil}</small></Button>
                         ) :
                         (
                             <Button variant="primary" onClick={ (e) => rentVehicleHandler(e) }>Rent Vehicle</Button>

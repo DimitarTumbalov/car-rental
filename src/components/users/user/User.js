@@ -12,6 +12,7 @@ export function User(){
     const params = useParams();
     const navigate = useNavigate();
     const loggedUser = getLoggedUser();
+    const[nameClassName, setNameClassName] = useState('bg-primary');
 
     useEffect(() => {
         if(loggedUser.role != 'admin' && (params.id && loggedUser.id != params.id))
@@ -24,11 +25,15 @@ export function User(){
         if(!paramsId)
             paramsId = loggedUser.id;
 
-
         getUserById(paramsId).then( response => {
             setUser(response.data);
         })
     }, [params.id])
+
+    useEffect(() => {
+        if(user?.role === 'admin')
+            setNameClassName('bg-danger');
+    }, [user])
 
     const editUserHandler = (e) => {
         e.stopPropagation() 
@@ -70,7 +75,7 @@ export function User(){
                 <Col xs='auto'>
                     <Card className='shadow rounded' style={{ width: '25rem', maxWidth: '100%' }}>
                     <Card.Img variant="top" src={user.picture ? user.picture : defaultAvatar} style={{ height: '370px', objectFit: 'cover' }}/>
-                        <Card.Body className='bg-primary'>
+                        <Card.Body className={nameClassName}>
                             <Card.Title className='text-light'><h3><b>{user.name}</b></h3></Card.Title>
                         </Card.Body>
                         <ListGroup className="list-group-flush">

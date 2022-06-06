@@ -1,24 +1,23 @@
 import DateObject from "react-date-object";
 
-var formatter = "hh:mm A DD.MM.YY";
-const formatter2 = "hh:mm A";
-const formatter3 = "DD.MM.YY";
+export const formatter = "DD.MM.YY hh:mm A";
+export const formatter2 = "hh:mm A";
+export const formatter3 = "DD.MM.YY";
 const formatter4 = "DD.MM";
 
 export function timeMilliesToDateObject(timeMillies){
-    return new DateObject(timeMillies).format(formatter3);
+    return new DateObject(timeMillies).format(formatter);
 }
 
 export function isAfter(dateString1, dateString2){
     let date1 = convertStringToDate(dateString1);
     let date2 = convertStringToDate(dateString2);
-
     return date1 > date2;
 }
 
 export function isAfterNow(dateString){
     let date = convertStringToDate(dateString);
-    return date.getTime() > Date.now();
+    return date > new Date();
 }
 
 export function getDaysBetween(startDate, endDate){
@@ -26,15 +25,15 @@ export function getDaysBetween(startDate, endDate){
 }
 
 export function convertStringToDate(dateString){
-    var date = new DateObject();
-    date.setFormat(formatter3);
+    let date = new DateObject();
+    date.setFormat(formatter);
     date.parse(dateString);
 
     return date.toDate();
 }
 
 export function convertStringToDateObject(dateTimeString){
-    var date = new DateObject();
+    let date = new DateObject();
     date.setFormat(formatter);
     date.parse(dateTimeString);
 
@@ -42,13 +41,13 @@ export function convertStringToDateObject(dateTimeString){
 }
 
 export function formatDate(unformattedDate) {
-    var now = new DateObject(Date.now());
+    let now = new DateObject(Date.now());
     
-    var updatedAt = new DateObject();
+    let updatedAt = new DateObject();
     updatedAt.setFormat(formatter);
     updatedAt.parse(unformattedDate);
 
-    var formattedDate = `on ${updatedAt.format(formatter3)} at ${updatedAt.format(formatter2)}`;
+    let formattedDate = `on ${updatedAt.format(formatter3)} at ${updatedAt.format(formatter2)}`;
 
     if(updatedAt.year == now.year){
         if(updatedAt.dayOfYear != now.dayOfYear){
@@ -61,7 +60,7 @@ export function formatDate(unformattedDate) {
                 if(now.minute == updatedAt.minute || (now.second + 60 - updatedAt.second) < 60)
                     formattedDate = "right now";
                 else{
-                    var mins = 0
+                    let mins = 0
 
                     if(now.hour == updatedAt.hour)
                         mins = now.minute - updatedAt.minute;

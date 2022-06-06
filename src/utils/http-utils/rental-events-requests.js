@@ -21,7 +21,7 @@ export function saveRentalEvent(rentalEvent, vehiclePricePerDay, userRentedCount
     // If a customer has rented a vehicle more than 3 times in the last 60 days, they would be designated as 
     // VIP customers and get a discount of 15%
 
-    var discount = 0;
+    let discount = 0;
 
     if(userRentedCount > 3){
         discount = 15
@@ -36,7 +36,7 @@ export function saveRentalEvent(rentalEvent, vehiclePricePerDay, userRentedCount
             discount = 0;
     }
 
-    var price = days * vehiclePricePerDay;
+    let price = days * vehiclePricePerDay;
 
     if(discount > 0) 
         price = price - (price * discount) / 100;

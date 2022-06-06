@@ -105,7 +105,7 @@ export function Vehicle(){
                                                 <Button variant="outline-dark" disabled>RENTED</Button>
                                             ) : 
                                             (
-                                                <Button variant="outline-dark" disabled>FOR RENT</Button>
+                                                <Button variant="outline-primary" disabled>FOR RENT</Button>
                                             )
                                         }
                                         <Button variant="dark" onClick={(e) => editVehicleHandler(e) }>Edit</Button>

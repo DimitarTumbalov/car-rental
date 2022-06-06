@@ -6,7 +6,7 @@ import { getVehicleById } from '../../../utils/http-utils/vehicles-requests';
 import './RentalEventForm.scss'
 import Datetime from 'react-datetime';
 import moment from 'moment';
-import { convertStringToDate, getDaysBetween, isAfter, timeMilliesToDateObject } from '../../../utils/ui-utils/date-formatter';
+import { convertStringToDate, formatter, formatter2, formatter3, getDaysBetween, isAfter, isAfterNow, timeMilliesToDateObject } from '../../../utils/ui-utils/date-formatter';
 import { getLoggedUser } from '../../../utils/http-utils/user-requests';
 
 export function RentalEventForm(){
@@ -33,9 +33,11 @@ export function RentalEventForm(){
         getAllRentalEvents().then(response => {
             let allRentalEvents = response.data;
             
+            let now = new Date();
+            
             // Get the number of recent rental events for this user
             let recentRentalEvents = allRentalEvents.filter( rE => rE.userId == loggedUser.id
-                 && getDaysBetween(new Date(), convertStringToDate(rE.endTime)) < 60);
+                 && ((getDaysBetween(now, convertStringToDate(rE.startTime)) < 60) || getDaysBetween(now, convertStringToDate(rE.endTime)) < 60)) ;
 
             setRentedCount(recentRentalEvents.length) 
         })
@@ -52,7 +54,7 @@ export function RentalEventForm(){
     }, [vehicleId]);
 
     useEffect(() => {
-        if(rentalEvent.startTime != '' && rentalEvent.endTime != '' && !isAfter(rentalEvent.startTime, rentalEvent.endTime)){
+        if(rentalEvent.startTime != '' && rentalEvent.endTime != '' && isAfterNow(rentalEvent.startTime) && isAfter(rentalEvent.endTime, rentalEvent.startTime)){
             let startDate = convertStringToDate(rentalEvent.startTime);
             let endDate = convertStringToDate(rentalEvent.endTime);
 
@@ -64,7 +66,7 @@ export function RentalEventForm(){
             // If a customer has rented a vehicle more than 3 times in the last 60 days, they would be designated as 
             // VIP customers and get a discount of 15%
 
-            var discount = 0;
+            let discount = 0;
 
             if(rentedCount > 3){
                 discount = 15
@@ -85,16 +87,15 @@ export function RentalEventForm(){
                 }
             }
 
-            var price = days * vehicle.pricePerDay;
+            let price = days * vehicle.pricePerDay;
 
             if(discount > 0) 
                 price = price - (price * discount) / 100;
 
             setRentValue(`Rent for $${price.toFixed(2)}`);
-            
         }else {
             if(rentalEvent.startTime != '' && rentalEvent.endTime != '')
-                setFormMessage('Please choose a valid period');    
+                setFormMessage('Please choose a valid period in the future');    
             else
                 setFormMessage('');
 
@@ -105,7 +106,7 @@ export function RentalEventForm(){
 
     const onInputChange = (dateTime, target) => {
         let time = timeMilliesToDateObject(dateTime.getTime());
-
+        
         setRentalEvent((prevState) => ({
             ...prevState,
             [target]: time
@@ -148,13 +149,13 @@ export function RentalEventForm(){
                         <Row className="mb-3">
                             <Form.Group as={Col} controlId="formGridEmail" className='text-start'>
                                 <Form.Label>Start time</Form.Label>
-                                <Datetime dateFormat={ 'DD.MM.YY' } timeFormat={ false } closeOnSelect={ true } utc={ true } locale="bg" isValidDate={ validTime }
+                                <Datetime dateFormat={ formatter3 } timeFormat={ formatter2 } closeOnSelect={ true } isValidDate={ validTime }
                                  inputProps={ inputPropsStartTime } onChange={ (m) => onInputChange(m.toDate(), 'startTime') } />
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridPassword" className='text-start'>
                                 <Form.Label>End time</Form.Label>
-                                <Datetime dateFormat={ 'DD.MM.YY' } timeFormat={ false } closeOnSelect={ true } utc={ true } locale="bg" isValidDate={ validTime }
+                                <Datetime dateFormat={ formatter3 } timeFormat={ formatter2 } closeOnSelect={ true } isValidDate={ validTime }
                                  inputProps={ inputPropsendTime } onChange={ (m) => onInputChange(m.toDate(), 'endTime') }></Datetime>
                             </Form.Group>
                         </Row>
@@ -164,7 +165,7 @@ export function RentalEventForm(){
                         }
 
                         <Button size='lg' variant="primary" className="mt-3" type="submit" 
-                            disabled={ rentalEvent.startTime === '' || rentalEvent.endTime === '' || isAfter(rentalEvent.startTime, rentalEvent.endTime) }>
+                            disabled={ rentalEvent.startTime === '' || rentalEvent.endTime === '' || !isAfterNow(rentalEvent.startTime) || !isAfter(rentalEvent.endTime, rentalEvent.startTime) }>
                             { rent_value }
                         </Button>
 

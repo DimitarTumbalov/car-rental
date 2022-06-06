@@ -22,9 +22,6 @@ export function RentalEventCard({ rentalEvent, deleteRentalEvent }){
         navigate(`/vehicle/${rentalEvent.vehicleId}`);
     }
 
-    if(!rentalEvent)
-        return null;
-
     return (
         <div className="rental-event-card shadow rounded" onClick={redirectToDetails}>
             <Card style={{ width: '18rem' }}>

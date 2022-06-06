@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { VALID_BULGARIAN_PHONE_NUMBER_REGEX } from '../../../utils/Constants';
-import { getLoggedUser, getUserById, saveUser } from '../../../utils/http-utils/user-requests';
+import { getLoggedUser, getUserById, saveUser, saveUserToLocalStorage } from '../../../utils/http-utils/user-requests';
 import './UserForm.scss'
 
 export function UserForm(){
@@ -40,6 +40,10 @@ export function UserForm(){
         event.preventDefault();
 
         saveUser(user).then(() => {
+            // if the updated user was the current user, update the localStorage
+            if(user.id == loggedUser.id)
+                saveUserToLocalStorage(user);
+
             navigate(`/user/${user.id}`);
         })
         .catch(error => setError(error.message));
@@ -65,9 +69,19 @@ export function UserForm(){
                         <Form.Control maxLength={50} type="email" placeholder="Enter email" name="email" value={user.email} onChange={onInputChange}  required/>
                     </Form.Group>
 
+                    { (loggedUser.role === 'admin' && loggedUser.id != user.id) &&
+                     <Form.Group className="mt-2 text-start" controlId="formBasicBrand">
+                        <Form.Label>Role</Form.Label>
+                        <Form.Select name="role" value={user.role} onChange={onInputChange} required>
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </Form.Select>
+                    </Form.Group>
+                    }
+
                     <Form.Group className="mt-2 text-start" controlId="formBasicPicture">
                         <Form.Label>Picture URL</Form.Label>
-                        <Form.Control maxLength={100} type="text" placeholder="Enter picture URL" name="picture" value={user.picture} onChange={onInputChange} />
+                        <Form.Control maxLength={300} type="text" placeholder="Enter picture URL" name="picture" value={user.picture} onChange={onInputChange} />
                     </Form.Group>
 
                     <Form.Group className="mt-2 text-start" controlId="formBasicPhone">

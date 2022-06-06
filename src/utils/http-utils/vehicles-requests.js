@@ -1,5 +1,6 @@
 import axios from 'axios';
 import DateObject from 'react-date-object';
+import { formatter } from '../ui-utils/date-formatter';
 
 const apiUrl = 'http://localhost:3005/vehicles'
 
@@ -9,7 +10,7 @@ export function deleteVehicle(id) {
 
 export function saveVehicle(vehicle) {
     let now = new DateObject(Date.now());
-    vehicle.updatedAt = now.format("hh:mm A DD.MM.YY");
+    vehicle.updatedAt = now.format(formatter);
 
     if (vehicle.id) {
         return axios.put(`${apiUrl}/${vehicle.id}`, vehicle);

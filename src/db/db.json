@@ -1,8 +1,8 @@
 {
   "users": [
     {
-      "name": "test",
-      "picture": "",
+      "name": "test123",
+      "picture": "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?cs=srgb&dl=pexels-suliman-sallehi",
       "email": "test123@abv.bg",
       "phone": "0878595827",
       "password": "1234",
@@ -10,130 +10,169 @@
       "role": "admin"
     },
     {
-      "name": "123",
-      "picture": "",
+      "name": "test6",
+      "picture": "https://writestylesonline.com/wp-content/uploads/2020/01/Three-Things-To-Consider-When-Deciding-On-Your-LinkedIn-Profile-Picture.jpg",
       "email": "test6@abv.bg",
-      "phone": "123123211231",
+      "phone": "359878997823",
       "password": "1234",
       "role": "user",
       "id": "bCVNm2q"
     },
     {
-      "name": "123213",
+      "name": "test5",
       "picture": "",
-      "email": "test123@abv.bg1",
-      "phone": "0878595877",
+      "email": "test5@abv.bg",
+      "phone": "+359878995866",
       "password": "1234",
-      "role": "user",
+      "role": "admin",
       "id": "CYOOKeR"
-    },
-    {
-      "name": "12312314",
-      "picture": "qw",
-      "email": "qw@adasd",
-      "phone": "359878595877",
-      "password": "1234",
-      "role": "user",
-      "id": "iBO0O5e"
     }
   ],
   "vehicles": [
     {
-      "brand": "bmw",
-      "model": "123",
-      "constructionYear": "2020",
-      "type": "luxury",
-      "picture": "",
-      "fuelType": "hybrid",
-      "pricePerDay": "1.02",
-      "seats": "8",
-      "updatedAt": "01:42 AM 06.06.22",
-      "id": 1
-    },
-    {
-      "brand": "bmw",
-      "model": "123123",
-      "constructionYear": "1990",
-      "type": "suv",
-      "picture": "",
-      "fuelType": "petrol",
-      "pricePerDay": "1.02",
-      "seats": "4",
-      "updatedAt": "01:41 AM 06.06.22",
-      "id": 2
-    },
-    {
-      "brand": "ford",
-      "model": "13123123",
-      "constructionYear": "1990",
-      "type": "luxury",
-      "picture": "",
-      "fuelType": "diesel",
-      "pricePerDay": "100",
-      "seats": "4",
-      "updatedAt": "01:00 AM 06.06.20",
-      "id": 3
-    },
-    {
-      "brand": "bmw",
-      "model": "123",
-      "constructionYear": "1990",
-      "type": "luxury",
-      "picture": "",
-      "fuelType": "petrol",
-      "pricePerDay": "100",
-      "seats": "8",
-      "updatedAt": "11:45 AM 06.06.22",
-      "id": 4
-    },
-    {
-      "brand": "bmw",
-      "model": "1",
-      "constructionYear": "1990",
-      "type": "cargo",
-      "picture": "",
-      "fuelType": "hybrid",
-      "pricePerDay": "100",
+      "brand": "Audi",
+      "model": "Q7",
+      "constructionYear": "2012",
+      "type": "Luxury",
+      "picture": "https://7cars.bg/wp-content/uploads/2020/02/C3AE1A18-BBC8-43D4-BC9E-A47B4D2D7749-876x535.jpeg",
+      "fuelType": "Diesel",
+      "pricePerDay": "60",
       "seats": "6",
-      "updatedAt": "12:21 PM 06.06.22",
-      "id": 5
+      "updatedAt": "06.06.22 03:55 PM",
+      "id": 7
     },
     {
-      "brand": "toyota",
-      "model": "1312321",
-      "constructionYear": "1990",
-      "type": "suv",
-      "picture": "",
-      "fuelType": "electric",
-      "pricePerDay": "100",
+      "brand": "BMW",
+      "model": "X5 M",
+      "constructionYear": "2013",
+      "type": "Luxury",
+      "picture": "https://cdn.motor1.com/images/mgl/P3G20A/s1/bmw-x5-m-facelift-rendering-by-kolesa.ru.webp",
+      "fuelType": "Hybrid",
+      "pricePerDay": "115",
       "seats": "6",
-      "updatedAt": "12:21 PM 06.06.22",
-      "id": 6
+      "updatedAt": "06.06.22 01:21 PM",
+      "id": 8
+    },
+    {
+      "brand": "Ford",
+      "model": "Taurus",
+      "constructionYear": "2002",
+      "type": "Economy",
+      "picture": "https://upload.wikimedia.org/wikipedia/commons/b/bb/05-07_Ford_Taurus_SE_sedan.jpg",
+      "fuelType": "Petrol",
+      "pricePerDay": "46",
+      "seats": "4",
+      "updatedAt": "06.06.22 01:22 PM",
+      "id": 9
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "model": "SLR McLaren",
+      "constructionYear": "2008",
+      "type": "SUV",
+      "picture": "https://autobild.bg/wp-content/uploads/2019/09/Weisser-Mercedes-SLR-McLaren-zu-verkaufen-474x316-561b4161d6ed8796.jpg",
+      "fuelType": "Hybrid",
+      "pricePerDay": "380",
+      "seats": "2",
+      "updatedAt": "06.06.22 01:28 PM",
+      "id": 10
+    },
+    {
+      "brand": "Nissan",
+      "model": "Maxima",
+      "constructionYear": "2005",
+      "type": "Economy",
+      "picture": "https://media.ed.edmunds-media.com/nissan/maxima/2004/oem/2004_nissan_maxima_sedan_35-se_fq_oem_1_500.jpg",
+      "fuelType": "Diesel",
+      "pricePerDay": "76",
+      "seats": "4",
+      "updatedAt": "06.06.22 01:25 PM",
+      "id": 11
+    },
+    {
+      "brand": "Tesla",
+      "model": "Model S",
+      "constructionYear": "2012",
+      "type": "Luxury",
+      "picture": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/2018_Tesla_Model_S_75D.jpg/1200px-2018_Tesla_Model_S_75D.jpg",
+      "fuelType": "Electric",
+      "pricePerDay": "150",
+      "seats": "4",
+      "updatedAt": "06.06.22 01:26 PM",
+      "id": 12
+    },
+    {
+      "brand": "Toyota",
+      "model": "Highlander",
+      "constructionYear": "2012",
+      "type": "Estate",
+      "picture": "https://drive.place/images/toyota/toyota_highlander_iv_offroad_5d_1.jpg",
+      "fuelType": "Hybrid",
+      "pricePerDay": "200",
+      "seats": "6",
+      "updatedAt": "05.06.22 01:28 PM",
+      "id": 13
+    },
+    {
+      "brand": "Subaru",
+      "model": "Legacy",
+      "constructionYear": "1990",
+      "type": "Luxury",
+      "picture": "https://upload.wikimedia.org/wikipedia/commons/8/8c/USDM_side-1-.jpg",
+      "fuelType": "Petrol",
+      "pricePerDay": "130",
+      "seats": "4",
+      "updatedAt": "06.06.22 01:31 PM",
+      "id": 14
+    },
+    {
+      "brand": "Audi",
+      "model": "4000",
+      "constructionYear": "1992",
+      "type": "Economy",
+      "picture": "https://media.carsandbids.com/cdn-cgi/image/width=2080,quality=70/1e096a26dbb02c45276d44886638a0826a982a36/photos/711920DB-CD3F-47B7-B1F5-CFC368F4E3DC_1_105_c.odAeNLarr.jpeg?t=159744678332",
+      "fuelType": "Petrol",
+      "pricePerDay": "57",
+      "seats": "4",
+      "updatedAt": "03.06.22 01:32 PM",
+      "id": 15
+    },
+    {
+      "brand": "Ford",
+      "model": "E150",
+      "constructionYear": "2007",
+      "type": "Cargo",
+      "picture": "https://vandimensions.com/media/pages/database/ford/e-series-2008/9f10249699-1584737281/1280px-2008_ford_e-series_wagon-1.jpg",
+      "fuelType": "Diesel",
+      "pricePerDay": "220",
+      "seats": "8",
+      "updatedAt": "05.06.22 01:34 PM",
+      "id": 16
     }
   ],
   "rental-events": [
     {
-      "startTime": "06.06.22",
-      "endTime": "30.06.22",
+      "startTime": "06.06.22 03:00 AM",
+      "endTime": "23.06.22 03:00 AM",
       "userId": "bCVNm2q",
-      "vehicleId": "2",
-      "price": "22.95",
+      "vehicleId": "14",
+      "price": "2106.00",
+      "id": 2
+    },
+    {
+      "startTime": "10.06.22 03:01 PM",
+      "endTime": "21.12.29 03:03 PM",
+      "userId": "bCVNm2q",
+      "vehicleId": "15",
+      "price": "141177.60",
       "id": 3
     },
     {
-      "startTime": "06.06.22",
-      "endTime": "29.06.22",
+      "startTime": "07.05.22 12:00 AM",
+      "endTime": "29.05.22 12:00 AM",
       "userId": "bCVNm2q",
-      "vehicleId": "5",
-      "price": "2160.00",
-      "id": 4
-    },
-    {
-      "startTime": "14.06.22",
-      "endTime": "28.06.22",
-      "userId": "bCVNm2q",
-      "vehicleId": "4",
-      "price": "1350.00",
+      "vehicleId": "7",
+      "price": "1173.00",
       "id": 5
     }
   ]

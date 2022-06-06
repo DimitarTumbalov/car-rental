@@ -45,6 +45,9 @@ export function VehicleForm() {
         })
     }
 
+    if(!vehicle)
+        return null;
+
     return (
         <Row className="login-wrapper-container justify-content-center align-content-center">
             <Col xs='10' sm='8' md='6' lg='4' xxl='3'>
@@ -55,10 +58,14 @@ export function VehicleForm() {
                         <Form.Label>Brand*</Form.Label>
                         <Form.Select name="brand" value={vehicle.brand} onChange={onInputChange} required>
                             <option value="" disabled>Select brand</option>
-                            <option value="opel">Opel</option>
-                            <option value="bmw">BMW</option>
-                            <option value="ford">Ford</option>
-                            <option value="toyota">Toyota</option>
+                            <option value="Audi">Audi</option>
+                            <option value="BMW">BMW</option>
+                            <option value="Ford">Ford</option>
+                            <option value="Mercedes-Benz">Mercedes-Benz</option>
+                            <option value="Nissan">Nissan</option>
+                            <option value="Subaru">Subaru</option>
+                            <option value="Tesla">Tesla</option>
+                            <option value="Toyota">Toyota</option>
                         </Form.Select>
                     </Form.Group>
 
@@ -77,11 +84,11 @@ export function VehicleForm() {
                         <Form.Label>Type*</Form.Label>
                         <Form.Select name="type" value={vehicle.type} onChange={onInputChange} required>
                             <option value="" disabled>Select type</option>
-                            <option value="economy">Economy</option>
-                            <option value="estate">Estate</option>
-                            <option value="luxury">Luxury</option>
-                            <option value="suv">Suv</option>
-                            <option value="cargo">Cargo</option>
+                            <option value="Economy">Economy</option>
+                            <option value="Estate">Estate</option>
+                            <option value="Luxury">Luxury</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Cargo">Cargo</option>
                         </Form.Select>
                     </Form.Group>
 
@@ -94,10 +101,10 @@ export function VehicleForm() {
                         <Form.Label>Fuel type*</Form.Label>
                         <Form.Select name="fuelType" value={vehicle.fuelType} onChange={onInputChange} required>
                             <option value="" disabled>Select fuel type</option>
-                            <option value="petrol">Petrol</option>
-                            <option value="diesel">Diesel</option>
-                            <option value="hybrid">Hybrid</option>
-                            <option value="electric">Electric</option>
+                            <option value="Petrol">Petrol</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Hybrid">Hybrid</option>
+                            <option value="Electric">Electric</option>
                         </Form.Select>
                     </Form.Group>
 
@@ -107,10 +114,10 @@ export function VehicleForm() {
                             <option value='' disabled>Select number of seats</option>
                             <option value='1'>1</option>
                             <option value='2'>2</option>
+                            <option value='3'>3</option>
                             <option value='4'>4</option>
                             <option value='6'>6</option>
                             <option value='8'>8</option>
-                            <option value='10'>10</option>
                             <option value='12'>12</option>
                         </Form.Select>
                     </Form.Group>

@@ -31,7 +31,7 @@ export function UserCard({ user, deleteUser }){
     }
 
     if(!user)
-        return <p>No User!</p>
+        return null
 
     return (
         <div className="user-card shadow rounded" onClick={redirectToDetails}>

@@ -61,7 +61,7 @@ export function Register(){
 
                     <Form.Group className="mt-2 text-start" controlId="formBasicPicture">
                         <Form.Label>Picture URL</Form.Label>
-                        <Form.Control maxLength={100} type="text" placeholder="Enter picture URL" name="picture" value={user.picture} onChange={onInputChange} />
+                        <Form.Control maxLength={300} type="text" placeholder="Enter picture URL" name="picture" value={user.picture} onChange={onInputChange} />
                     </Form.Group>
 
                     <Form.Group className="mt-2 text-start" controlId="formBasicPhone" >

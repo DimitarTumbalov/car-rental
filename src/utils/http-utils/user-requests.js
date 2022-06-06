@@ -7,6 +7,11 @@ export function getLoggedUser() {
     return JSON.parse(localStorage.getItem(loggedUserKey));
 }
 
+export function saveUserToLocalStorage(user) {
+    user.password = null;
+    localStorage.setItem(loggedUserKey, JSON.stringify(user));
+}
+
 export function deleteUser(id) {
     return axios.delete(`${apiUrl}/${id}`);
 }
@@ -23,11 +28,11 @@ export async function registerUser(user) {
     const existingUsersEmail = (await axios.get(`${apiUrl}?email=${user.email}`)).data;
     const existingUsersPhone = (await axios.get(`${apiUrl}?phone=${user.phone}`)).data;
 
-    if (existingUsersEmail.length > 0) {
+    if (existingUsersEmail.length > 0)
         throw new Error('User with this email already exists.');
-    }else if(existingUsersPhone.length > 0) {
+
+    if(existingUsersPhone.length > 0)
         throw new Error('User with this phone number already exists.');
-    }
 
     return saveUser(user);
 }
@@ -48,7 +53,7 @@ export async function login(user) {
     if (!foundUser)
         throw new Error('Invalid username/password');
 
-    localStorage.setItem(loggedUserKey, JSON.stringify(foundUser));
+    saveUserToLocalStorage(foundUser);
 
     return foundUser;
 }
